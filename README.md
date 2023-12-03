@@ -8,7 +8,7 @@ Source: [Big O Cheat Sheet](https://www.bigocheatsheet.com/)
 To get a good grasp on Big O notation checkout this
 [Web Dev Simplified video on Big O notation](https://youtu.be/itn09C2ZB9Y?si=KtfxAVqNPNTPutWw)
 
-#### Big O for Object
+### Big O for Object
 
 ```js
 const person = {
@@ -47,5 +47,25 @@ console.log(odd[0]); // Access - constant O(1)
 
 // Search - linear O(n)
 
-forEach / map / filter / reduce // linear O(n);
+forEach / map / filter / reduce; // linear O(n);
+```
+
+# Algorithms
+
+## Math Algorithms
+
+### Fibonacci Sequence
+
+```js
+function fibonacci(n) {
+  const fib = [0, 1];
+  for (let i = 2; i < n; i++) {
+    // sum previous two item and insert it to the next
+    fib[i] = fib[i - 1] + fib[i - 2];
+  }
+
+  return fib;
+}
+
+console.log(fibonacci(7)); // [0, 1, 1, 2, 3, 5, 8]
 ```

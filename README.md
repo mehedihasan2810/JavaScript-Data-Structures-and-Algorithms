@@ -159,3 +159,38 @@ console.log(isPrime(0)); // false
 console.log(isPrime(4)); // false
 console.log(isPrime(5)); // true
 ```
+
+Check **_if a number is power of two_**
+
+```js
+function isPowerOfTwo(n) {
+  if (n < 1) return false;
+
+  while (n > 1) {
+    if (n % 2 !== 0) return false;
+
+    n = n / 2;
+  }
+
+  return true;
+}
+
+console.log(isPowerOfTwo(0)); // false
+console.log(isPowerOfTwo(1)); // true as 2^0 = 1
+console.log(isPowerOfTwo(2)); // true as 2^1 = 2
+console.log(isPowerOfTwo(5)); // false
+
+// ---------------------------------------------
+
+// With bitwise
+function isPowerOfTwoBitWise(n) {
+  if (n < 1) return false;
+
+  return (n & (n - 1)) === 0;
+}
+
+console.log(isPowerOfTwoBitWise(0)); // false
+console.log(isPowerOfTwoBitWise(1)); // true
+console.log(isPowerOfTwoBitWise(2)); // true
+console.log(isPowerOfTwoBitWise(5)); // false
+```

@@ -54,7 +54,7 @@ forEach / map / filter / reduce; // linear O(n);
 
 ## Math Algorithms
 
-### Fibonacci Sequence
+Calculate ***a specific length of fibonacci sequence***
 
 ```js
 function fibonacci(n) {
@@ -68,4 +68,58 @@ function fibonacci(n) {
 }
 
 console.log(fibonacci(7)); // [0, 1, 1, 2, 3, 5, 8]
+```
+
+---
+
+Find the ***nth fibonacci sequence***
+
+```js
+var fib = function (n) {
+  if (n === 0) return 0;
+  if (n === 1) return 1;
+  const fib = [0, 1];
+  for (let i = 2; i < n; i++) {
+    fib[i] = fib[i - 1] + fib[i - 2];
+  }
+  return fib[fib.length - 1] + fib[fib.length - 2];
+};
+
+console.log(fib(2)); // 1
+console.log(fib(3)); // 2
+console.log(fib(4)); // 3
+```
+
+Calculate ***factorial*** of a number
+
+```js
+// With Recursion
+function factorial(n) {
+  if (n === 0) return 1;
+
+  return n * factorial(n - 1);
+}
+
+console.log(factorial(0)); // 1
+console.log(factorial(1)); // 1
+console.log(factorial(4)); // 24
+console.log(factorial(5)); // 120
+
+// ------------------------------
+
+// With Loop
+function factorial(n) {
+  let fac = 1;
+
+  for (let i = 2; i <= n; i++) {
+    fac = fac * i;
+  }
+
+  return fac;
+}
+
+console.log(factorial(0)); // 1
+console.log(factorial(1)); // 1
+console.log(factorial(4)); // 24
+console.log(factorial(5)); // 120
 ```

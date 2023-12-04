@@ -15,6 +15,9 @@
   - ### [Search Algorithm](#search-algorithms)
     - [Linear Search](#linear-search)
     - [Binary Search](#binary-search)
+  - ### [Sorting Algorithms](#sorting-algorithms)
+    - [Bubble Sort](#bubble-sort)
+    - [Insertion Sort](#insertion-sort)
 
 ## Big O Notation
 
@@ -275,27 +278,103 @@ console.log(binarySearch([-5, 2, 4, 6, 10], 20)); // -1
 
 // Recursive solution - logarithmic Big-O(logn)
 function recursiveBinarySearch(arr, target) {
-  return search(arr, target, 0, arr.length - 1)
+  return search(arr, target, 0, arr.length - 1);
 }
 
 function search(arr, target, leftIndex, rightIndex) {
   if (leftIndex > rightIndex) {
-    return -1
+    return -1;
   }
 
-  let middleIndex = Math.floor((leftIndex + rightIndex) / 2)
+  let middleIndex = Math.floor((leftIndex + rightIndex) / 2);
   if (target === arr[middleIndex]) {
-    return middleIndex
+    return middleIndex;
   }
 
   if (target < arr[middleIndex]) {
-    return search(arr, target, leftIndex, middleIndex - 1)
+    return search(arr, target, leftIndex, middleIndex - 1);
   } else {
-    return search(arr, target, middleIndex + 1, rightIndex)
+    return search(arr, target, middleIndex + 1, rightIndex);
   }
 }
 
-console.log(recursiveBinarySearch([-5, 2, 4, 6, 10], 10)) // 4
-console.log(recursiveBinarySearch([-5, 2, 4, 6, 10], 6)) // 3
-console.log(recursiveBinarySearch([-5, 2, 4, 6, 10], 20)) // -1
+console.log(recursiveBinarySearch([-5, 2, 4, 6, 10], 10)); // 4
+console.log(recursiveBinarySearch([-5, 2, 4, 6, 10], 6)); // 3
+console.log(recursiveBinarySearch([-5, 2, 4, 6, 10], 20)); // -1
+```
+
+## Sorting Algorithms
+
+### Bubble Sort
+
+<details>
+<summary>Bubble Sort Idea</summary>
+- Compare adjacent elements in the array and swap the positions if they are not in the intended order.
+<br>
+- Repeat the instructions as you step through each element in the array.
+<br>
+- Once you step through the whole array with no swaps, the array is sorted.
+</details>
+<br>
+
+```js
+// Bubble Sort - Big-O - Quadratic O(n^2)
+function bubbleSort(arr) {
+  let isSwapped;
+
+  do {
+    isSwapped = false;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] > arr[i + 1]) {
+        const temp = arr[i];
+        arr[i] = arr[i + 1];
+        arr[i + 1] = temp;
+        isSwapped = true;
+      }
+    }
+  } while (isSwapped);
+}
+
+const arr = [2, -5, 6, -1];
+bubbleSort(arr);
+console.log(arr);
+```
+
+### Insertion Sort
+
+<details>
+<summary>Insertion Sort Idea</summary>
+- Virtually split the array into a sorted and an unsorted part.
+<br>
+- Assume that the first element is already sorted and the remaining elements are unsorted.
+<br>
+- Select and unsorted element and compare it with all elements in the unsorted part.
+<br>
+- If the elements in the sorted part is smaller than the selected element then proceed to the next element in the unsorted part. Else, shift the larger element towards right in the sorted part.
+<br>
+- Insert the selected element at the right index.
+<br>
+- Repeat till all the unsorted elements are placed in the right order
+</details>
+<br>
+
+```js
+// Insertion Sort Big-O - Quadratic O(n^2)
+function insertionSort(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    const numberToInsert = arr[i];
+    let j = i - 1;
+    while (j >= 0 && arr[j] > numberToInsert) {
+      arr[j + 1] = arr[j];
+
+      j = j - 1;
+    }
+
+    arr[j + 1] = numberToInsert;
+  }
+}
+
+const arr = [8, 20, -2, 4, -6];
+insertionSort(arr);
+console.log(arr); // [-6, -2, 4, 8, 20]
 ```

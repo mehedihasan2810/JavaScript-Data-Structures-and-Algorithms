@@ -12,8 +12,9 @@
     - [Calculate **_factorial_** of a number](#calculate-factorial-of-a-number)
     - [Check **_if a number is prime or not_**](#check-if-a-number-is-prime-or-not)
     - [Check **_if a number is power of two_**](#check-if-a-number-is-power-of-two)
-  - [Search Algorithm](#search-algorithms)
+  - ### [Search Algorithm](#search-algorithms)
     - [Linear Search](#linear-search)
+    - [Binary Search](#binary-search)
 
 ## Big O Notation
 
@@ -225,7 +226,9 @@ console.log(isPowerOfTwoBitWise(5)); // false
 ```
 
 ## Search Algorithms
+
 ### Linear Search
+
 ```js
 function linearSea(arr, target) {
   for (let i = 0; i < arr.length; i++) {
@@ -239,4 +242,32 @@ const arr = [1, 3, 5, 7, 9];
 const target = 5;
 console.log(linearSea(arr, 5)); // Output: 2
 console.log(linearSea(arr, 2)); // Output: -1
+```
+
+### Binary Search
+
+> In terms of binary search the input array should be sorted if it is not then sort the array first or you can opt for linear search
+
+```js
+// binary search - logarithmic Big-O(logn)
+function binarySearch(arr, target) {
+  let leftIndex = 0;
+  let rightIndex = arr.length - 1;
+
+  while (leftIndex <= rightIndex) {
+    const middleIndex = Math.floor((leftIndex + rightIndex) / 2);
+    if (target === arr[middleIndex]) return middleIndex;
+    if (target < arr[middleIndex]) {
+      rightIndex = middleIndex - 1;
+    } else {
+      leftIndex = middleIndex + 1;
+    }
+  }
+
+  return -1;
+}
+
+console.log(binarySearch([-5, 2, 4, 6, 10], 10)); // 4
+console.log(binarySearch([-5, 2, 4, 6, 10], 6)); // 3
+console.log(binarySearch([-5, 2, 4, 6, 10], 20)); // -1
 ```

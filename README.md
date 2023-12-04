@@ -12,6 +12,8 @@
     - [Calculate **_factorial_** of a number](#calculate-factorial-of-a-number)
     - [Check **_if a number is prime or not_**](#check-if-a-number-is-prime-or-not)
     - [Check **_if a number is power of two_**](#check-if-a-number-is-power-of-two)
+  - [Search Algorithm](#search-algorithms)
+    - [Linear Search](#linear-search)
 
 ## Big O Notation
 
@@ -88,7 +90,8 @@ console.log(fibonacci(7)); // [0, 1, 1, 2, 3, 5, 8]
 ### Find the **_nth fibonacci sequence_**
 
 ```js
-var fib = function (n) {
+// Iterative solution - Big O(n)
+function fibonacci(n) {
   if (n === 0) return 0;
   if (n === 1) return 1;
   const fib = [0, 1];
@@ -96,7 +99,7 @@ var fib = function (n) {
     fib[i] = fib[i - 1] + fib[i - 2];
   }
   return fib[fib.length - 1] + fib[fib.length - 2];
-};
+}
 
 console.log(fib(2)); // 1
 console.log(fib(3)); // 2
@@ -104,7 +107,7 @@ console.log(fib(4)); // 3
 
 // ------------------------------
 
-// Recursive solution
+// Recursive solution - Big O(2^n)
 function recursiveFibonacci(n) {
   if (n < 2) return n;
 
@@ -219,4 +222,21 @@ console.log(isPowerOfTwoBitWise(0)); // false
 console.log(isPowerOfTwoBitWise(1)); // true
 console.log(isPowerOfTwoBitWise(2)); // true
 console.log(isPowerOfTwoBitWise(5)); // false
+```
+
+## Search Algorithms
+### Linear Search
+```js
+function linearSea(arr, target) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === target) {
+      return i;
+    }
+  }
+  return -1;
+}
+const arr = [1, 3, 5, 7, 9];
+const target = 5;
+console.log(linearSea(arr, 5)); // Output: 2
+console.log(linearSea(arr, 2)); // Output: -1
 ```

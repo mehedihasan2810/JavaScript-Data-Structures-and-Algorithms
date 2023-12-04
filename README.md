@@ -54,7 +54,7 @@ forEach / map / filter / reduce; // linear O(n);
 
 ## Math Algorithms
 
-Calculate ***a specific length of fibonacci sequence***
+Calculate **_a specific length of fibonacci sequence_**
 
 ```js
 function fibonacci(n) {
@@ -72,7 +72,7 @@ console.log(fibonacci(7)); // [0, 1, 1, 2, 3, 5, 8]
 
 ---
 
-Find the ***nth fibonacci sequence***
+Find the **_nth fibonacci sequence_**
 
 ```js
 var fib = function (n) {
@@ -90,7 +90,7 @@ console.log(fib(3)); // 2
 console.log(fib(4)); // 3
 ```
 
-Calculate ***factorial*** of a number
+Calculate **_factorial_** of a number
 
 ```js
 // With Recursion
@@ -122,4 +122,40 @@ console.log(factorial(0)); // 1
 console.log(factorial(1)); // 1
 console.log(factorial(4)); // 24
 console.log(factorial(5)); // 120
+```
+
+Check **_if a number is prime or not_**
+
+```js
+// With Loop - Big-O - linear O(n)
+function isPrime(n) {
+  if (n < 2) return false;
+
+  for (let i = 2; i < n; i++) {
+    if (n % i === 0) return false;
+  }
+
+  return true;
+}
+
+console.log(isPrime(0)); // false
+console.log(isPrime(4)); // false
+console.log(isPrime(5)); // true
+
+// -------------------------------------
+
+// More Optimized - Big-O - O(sqrt(n))
+function isPrime(n) {
+  if (n < 2) return false;
+
+  for (let i = 2; i <= Math.sqrt(n); i++) {
+    if (n % i === 0) return false;
+  }
+
+  return true;
+}
+
+console.log(isPrime(0)); // false
+console.log(isPrime(4)); // false
+console.log(isPrime(5)); // true
 ```

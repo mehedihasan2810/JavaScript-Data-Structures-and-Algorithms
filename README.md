@@ -1,5 +1,18 @@
 # Data Structures and Algorithms with JavaScript
 
+# Table of Contents
+
+- ## [Big-O Notation](#big-o-notation)
+  - [Big-O for Object](#big-o-for-object)
+  - [Big-O for Array](#big-o-for-array)
+- ## [Algorithms](#algorithms)
+  - ### [Math Algorithms](#math-algorithms)
+    - [Calculate **_a specific length of fibonacci sequence_**](#calculate-a-specific-length-of-fibonacci-sequence)
+    - [Find the **_nth fibonacci sequence_**](#find-the-nth-fibonacci-sequence)
+    - [Calculate **_factorial_** of a number](#calculate-factorial-of-a-number)
+    - [Check **_if a number is prime or not_**](#check-if-a-number-is-prime-or-not)
+    - [Check **_if a number is power of two_**](#check-if-a-number-is-power-of-two)
+
 ## Big O Notation
 
 ![Big O notation graph](/assets/bigo-graph.png)
@@ -54,7 +67,7 @@ forEach / map / filter / reduce; // linear O(n);
 
 ## Math Algorithms
 
-Calculate **_a specific length of fibonacci sequence_**
+### Calculate **_a specific length of fibonacci sequence_**
 
 ```js
 function fibonacci(n) {
@@ -72,7 +85,7 @@ console.log(fibonacci(7)); // [0, 1, 1, 2, 3, 5, 8]
 
 ---
 
-Find the **_nth fibonacci sequence_**
+### Find the **_nth fibonacci sequence_**
 
 ```js
 var fib = function (n) {
@@ -88,9 +101,22 @@ var fib = function (n) {
 console.log(fib(2)); // 1
 console.log(fib(3)); // 2
 console.log(fib(4)); // 3
+
+// ------------------------------
+
+// Recursive solution
+function recursiveFibonacci(n) {
+  if (n < 2) return n;
+
+  return recursiveFibonacci(n - 1) + recursiveFibonacci(n - 2);
+}
+
+console.log(recursiveFibonacci(2)); // 1
+console.log(recursiveFibonacci(3)); // 2
+console.log(recursiveFibonacci(4)); // 3
 ```
 
-Calculate **_factorial_** of a number
+### Calculate **_factorial_** of a number
 
 ```js
 // With Recursion
@@ -124,7 +150,7 @@ console.log(factorial(4)); // 24
 console.log(factorial(5)); // 120
 ```
 
-Check **_if a number is prime or not_**
+### Check **_if a number is prime or not_**
 
 ```js
 // With Loop - Big-O - linear O(n)
@@ -160,7 +186,7 @@ console.log(isPrime(4)); // false
 console.log(isPrime(5)); // true
 ```
 
-Check **_if a number is power of two_**
+### Check **_if a number is power of two_**
 
 ```js
 function isPowerOfTwo(n) {

@@ -12,12 +12,13 @@
     - [Calculate **_factorial_** of a number](#calculate-factorial-of-a-number)
     - [Check **_if a number is prime or not_**](#check-if-a-number-is-prime-or-not)
     - [Check **_if a number is power of two_**](#check-if-a-number-is-power-of-two)
-  - ### [Search Algorithm](#search-algorithms)
+  - ### [Search Algorithms](#search-algorithms)
     - [Linear Search](#linear-search)
     - [Binary Search](#binary-search)
   - ### [Sorting Algorithms](#sorting-algorithms)
     - [Bubble Sort](#bubble-sort)
     - [Insertion Sort](#insertion-sort)
+    - [Quick Sort](#quick-sort)
 
 ## Big O Notation
 
@@ -377,4 +378,97 @@ function insertionSort(arr) {
 const arr = [8, 20, -2, 4, -6];
 insertionSort(arr);
 console.log(arr); // [-6, -2, 4, 8, 20]
+```
+
+### Quick Sort
+
+<details>
+<summary>Quick Sort Idea</summary>
+<br>
+- Identify the pivot element in the array
+<br>
+-- Pick first element as pivot
+<br>
+-- Pick last element as pivot
+<br>
+-- Pick random element as pivot
+<br>
+-- Pick median as pivot
+<br>
+<br>
+- Put everything that's smaller than the pivot into left array and everything that's greater than the pivot into right array
+<br>
+- Repeat the process for the individual `left` and `right` array till you have a array of length 1 which is sorted by definition
+<br>
+- Repeatedly concatenate the left array, pivot and right array till one sorted array remains
+</details>
+<br>
+
+```js
+// Quick Sort without constraints / in place
+// Worst case - O(n^2) // happens when the arr is already sorted or you try to sort an already sorted arr
+// Avg case - O(nlogn)
+function quickSort(arr) {
+  if (arr.length < 2) {
+    return arr;
+  }
+
+  const pivot = arr.length - 1;
+  const left = [];
+  const right = [];
+
+  for (let i = 0; i < arr.length - 1; i++) {
+    if (arr[i] < pivot) {
+      left.push(arr[i]);
+    } else {
+      right.push(arr[i]);
+    }
+  }
+
+  return [...quickSort(left), pivot, ...quickSort(right)];
+}
+
+console.log(quickSort([4, -2, 1, -5])); // [ -5, -2, 1, 4 ]
+
+// ---------------------------------------------
+// ---------------------------------------------
+
+// Quick Sort with constraints / in place
+// Worst case - O(n^2) // happens when the arr is already sorted or you try to sort an already sorted arr
+// Avg case - O(nlogn)
+function quickSort(arr, left = 0, right = arr.length - 1) {
+  if (left < right) {
+    const pivot = partition(arr, left, right);
+    quickSort(arr, left, pivot - 1);
+    quickSort(arr, pivot + 1, right);
+  }
+  return arr;
+}
+
+function partition(arr, left, right) {
+  const pivot = arr[right];
+  let i = left;
+  for (let j = left; j < right; j++) {
+    if (arr[j] < pivot) {
+      swap(arr, i, j);
+      i++;
+    }
+  }
+  swap(arr, i, right);
+  return i;
+}
+
+function swap(arr, i, j) {
+  const temp = arr[i];
+  arr[i] = arr[j];
+  arr[j] = temp;
+}
+
+const arr = [8, 20, -2, 4, -6];
+quickSort(arr);
+console.log(arr); // [-6, -2, 4, 8, 20]
+
+const arr2 = [8, 20, -2, 4, -6];
+quickSort(arr2, 2, 4); // start and end constraint
+console.log(arr2); // [ 8, 20, -6, -2, 4 ]
 ```

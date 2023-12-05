@@ -520,7 +520,8 @@ console.log(mergesort(arr)); // [-6, -2, 4, 8, 20]
 ### Cartesian Product
 
 ```js
-// Big-O - O(mn) // depends on length. As both array input lengths could be different hence Big-O is O(mn) instead O(n^2)
+// Big-O - O(mn) // depends on length. As both array input
+// lengths could be different hence Big-O is O(mn) instead O(n^2)
 function cartesianProduct(arr1, arr2) {
   const result = [];
 
@@ -536,4 +537,28 @@ function cartesianProduct(arr1, arr2) {
 const arr1 = [1, 3];
 const arr2 = [2, 4, 5];
 console.log(cartesianProduct(arr1, arr2)); // [ [ 1, 2 ], [ 1, 4 ], [ 1, 5 ], [ 3, 2 ], [ 3, 4 ], [ 3, 5 ] ]
+```
+
+### Climbing Staircase
+
+**_Problem -_** Given a staircase of \`n\` steps, count the number of distinct ways to climb to the top.
+<br>
+You can either climb 1 step or 2 step at a time.
+
+```js
+// Big-O - linear O(n)
+function climbingStairCase(n) {
+  const numOfWays = [1, 2];
+  for (let i = 2; i <= n; i++) {
+    numOfWays[i] = numOfWays[i - 1] + numOfWays[i - 2];
+  }
+
+  return numOfWays[n - 1];
+}
+
+console.log(climbingStairCase(1)); // 1
+console.log(climbingStairCase(2)); // 2
+console.log(climbingStairCase(3)); // 3
+console.log(climbingStairCase(4)); // 5
+console.log(climbingStairCase(5)); // 8
 ```

@@ -22,6 +22,8 @@
     - [Merge Sort](#merge-sort)
   - ### [Miscellaneous Algorithms](#miscellaneous-algorithms)
     - [Cartesian Product](#cartesian-product)
+    - [Climbing Staircase](#climbing-staircase)
+    - [Tower Of Hanoi](#tower-of-hanoi)
 
 ## Big O Notation
 
@@ -561,4 +563,50 @@ console.log(climbingStairCase(2)); // 2
 console.log(climbingStairCase(3)); // 3
 console.log(climbingStairCase(4)); // 5
 console.log(climbingStairCase(5)); // 8
+```
+
+### Tower Of Hanoi
+
+![tower of hanoi visual explanation](/assets/tower-of-hanoi.jpg)
+Source: [Enjoy Mathematics](https://www.enjoymathematics.com/blog/tower-of-hanoi-puzzle)
+
+<details>
+<summary>What is Tower Of Hanoi</summary>
+- Tower of hanoi is a mathematical puzzle where we have three rods and a number of disks of various diameters.
+<br>
+- The objective of the puzzle is to move the entire stack to the last rod obeying following the rules:
+<br>
+-- Only on disk may be moved at a time.
+<br>
+-- Each move consists of taking the upper disk from one of the stacks and placing it on top of another stack or on an empty rod. And lastly
+<br>
+-- No disk may be placed on top of a disk that is smaller
+</details>
+<br>
+
+```js
+// Steps to solve the problem:-
+// Steps-1:- Shift `n-1` disks from `A` to `B`, using `C`(when required)
+// Steps-2:- Shift last disk from `A` to `C`
+// Steps-3:- Shift `n-1` disks from `B` to `C`, using `A`(when required)
+
+// Big-O - O(2^n)
+function towerOfHanoi(n, fromRod, toRod, usingRod) {
+  if (n === 1) {
+    console.log(`Move disk 1 from ${fromRod} to ${toRod}`);
+    return;
+  }
+  towerOfHanoi(n - 1, fromRod, usingRod, toRod);
+  console.log(`Move disk ${n} from ${fromRod} to ${toRod}`);
+  towerOfHanoi(n - 1, usingRod, toRod, fromRod);
+}
+
+towerOfHanoi(3, "A", "C", "B");
+// Move disk 1 from A to C
+// Move disk 2 from A to B
+// Move disk 1 from C to B
+// Move disk 3 from A to C
+// Move disk 1 from B to A
+// Move disk 2 from B to C
+// Move disk 1 from A to C
 ```

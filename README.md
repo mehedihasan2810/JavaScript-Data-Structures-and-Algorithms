@@ -24,6 +24,15 @@
     - [Cartesian Product](#cartesian-product)
     - [Climbing Staircase](#climbing-staircase)
     - [Tower Of Hanoi](#tower-of-hanoi)
+- ## [Data Structures](#data-structures)
+  - ### [Built In Data Structures](#built-in-data-structures)
+    - [Array](#array)
+    - [Object](#object)
+    - [Set](#set---refer-to-this-doc-to-learn-more-about-set)
+    - [Map](#map---refer-to-this-doc-to-learn-more-about-map)
+  - ### [Custom Data Structures](#custom-data-structures)
+    - [Stack](#stack)
+    - [Queue](#queue)
 
 ## Big O Notation
 
@@ -568,6 +577,7 @@ console.log(climbingStairCase(5)); // 8
 ### Tower Of Hanoi
 
 ![tower of hanoi visual explanation](/assets/tower-of-hanoi.jpg)
+<br>
 Source: [Enjoy Mathematics](https://www.enjoymathematics.com/blog/tower-of-hanoi-puzzle)
 
 <details>
@@ -609,4 +619,161 @@ towerOfHanoi(3, "A", "C", "B");
 // Move disk 1 from B to A
 // Move disk 2 from B to C
 // Move disk 1 from A to C
+```
+
+<!-------------
+Data Structures
+--------------->
+
+<br>
+
+# Data Structures
+
+## Built In Data Structures
+
+### Array
+
+### Object
+
+### Set - [refer to this doc to learn more about Set](https://javascript.info/map-set#set)
+
+### Map - [refer to this doc to learn more about Map](https://javascript.info/map-set#map)
+
+### WeakSet and WeakMap - [refer to this doc to learn more about WeakSet and WeakMap](https://javascript.info/weakmap-weakset)
+
+## Custom Data Structures
+
+### Stack
+
+In JavaScript, a stack is a data structure that follows the Last In, First Out (LIFO) principle. This means that the last element added to the stack is the first one to be removed. You can implement a stack using an array in JavaScript.
+
+**_Implementation:_**
+
+```js
+class Stack {
+  constructor() {
+    this.items = [];
+  }
+
+  // Add element to the stack
+  push(element) {
+    this.items.push(element);
+  }
+
+  // Remove and return the last element added to the stack
+  pop() {
+    if (this.items.length === 0) {
+      return "Underflow";
+    }
+    return this.items.pop();
+  }
+
+  // Return the last element without removing it
+  peek() {
+    return this.items[this.items.length - 1];
+  }
+
+  // Check if the stack is empty
+  isEmpty() {
+    return this.items.length === 0;
+  }
+
+  // Return the size of the stack
+  size() {
+    return this.items.length;
+  }
+
+  // Clear the stack
+  clear() {
+    this.items = [];
+  }
+}
+
+// Example usage:
+const stack = new Stack();
+
+stack.push(1);
+stack.push(2);
+stack.push(3);
+
+console.log(stack.peek()); // Output: 3
+
+console.log(stack.pop()); // Output: 3
+console.log(stack.pop()); // Output: 2
+
+console.log(stack.isEmpty()); // Output: false
+
+console.log(stack.size()); // Output: 1
+
+stack.clear();
+console.log(stack.isEmpty()); // Output: true
+```
+
+### Queue
+
+In JavaScript, a queue is a data structure that follows the First In, First Out (FIFO) principle. This means that the first element added to the queue is the first one to be removed. You can implement a queue using an array in JavaScript.
+
+**_Implementation_**
+
+```js
+class Queue {
+  constructor() {
+    this.items = [];
+  }
+
+  // Add element to the end of the queue
+  enqueue(element) {
+    this.items.push(element);
+  }
+
+  // Remove and return the front element from the queue
+  dequeue() {
+    if (this.items.length === 0) {
+      return "Underflow";
+    }
+    return this.items.shift();
+  }
+
+  // Return the front element without removing it
+  /*front or*/ peek() {
+    if (this.items.length === 0) {
+      return "Queue is empty";
+    }
+    return this.items[0];
+  }
+
+  // Check if the queue is empty
+  isEmpty() {
+    return this.items.length === 0;
+  }
+
+  // Return the size of the queue
+  size() {
+    return this.items.length;
+  }
+
+  // Clear the queue
+  clear() {
+    this.items = [];
+  }
+}
+
+// Example usage:
+const queue = new Queue();
+
+queue.enqueue(1);
+queue.enqueue(2);
+queue.enqueue(3);
+
+console.log(queue.front()); // Output: 1
+
+console.log(queue.dequeue()); // Output: 1
+console.log(queue.dequeue()); // Output: 2
+
+console.log(queue.isEmpty()); // Output: false
+
+console.log(queue.size()); // Output: 1
+
+queue.clear();
+console.log(queue.isEmpty()); // Output: true
 ```

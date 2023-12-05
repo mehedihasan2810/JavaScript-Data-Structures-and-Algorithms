@@ -19,6 +19,7 @@
     - [Bubble Sort](#bubble-sort)
     - [Insertion Sort](#insertion-sort)
     - [Quick Sort](#quick-sort)
+    - [Merge Sort](#merge-sort)
 
 ## Big O Notation
 
@@ -471,4 +472,43 @@ console.log(arr); // [-6, -2, 4, 8, 20]
 const arr2 = [8, 20, -2, 4, -6];
 quickSort(arr2, 2, 4); // start and end constraint
 console.log(arr2); // [ 8, 20, -6, -2, 4 ]
+```
+
+### Merge Sort
+
+<details>
+<summary>Quick Sort Idea</summary>
+- Divide the array into sub arrays, each containing only one element (An array with one element is considered sorted)
+<br>
+- Repeatedly merge the sub arrays to produce new sorted sub arrays until there is only one sub array remaining. That will be the sorted array.
+</details>
+<br>
+
+```js
+// Big-O - O(nlogn)
+function mergesort(arr) {
+  if (arr.length < 2) {
+    return arr;
+  }
+  const mid = Math.floor(arr.length / 2);
+  const leftArr = arr.slice(0, mid);
+  const rightArr = arr.slice(mid);
+  return merge(mergesort(leftArr), mergesort(rightArr));
+}
+
+function merge(leftArr, rightArr) {
+  const sortedArr = [];
+  while (leftArr.length && rightArr.length) {
+    if (leftArr[0] <= rightArr[0]) {
+      sortedArr.push(leftArr.shift());
+    } else {
+      sortedArr.push(rightArr.shift());
+    }
+  }
+  const resultArr = [...sortedArr, ...leftArr, ...rightArr];
+  return resultArr;
+}
+
+const arr = [8, 20, -2, 4, -6];
+console.log(mergesort(arr)); // [-6, -2, 4, 8, 20]
 ```

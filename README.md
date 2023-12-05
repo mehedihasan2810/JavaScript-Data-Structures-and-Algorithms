@@ -33,6 +33,7 @@
   - ### [Custom Data Structures](#custom-data-structures)
     - [Stack](#stack)
     - [Queue](#queue)
+    - [Circular Queue](#circular-queue)
 
 ## Big O Notation
 
@@ -647,6 +648,42 @@ Data Structures
 
 In JavaScript, a stack is a data structure that follows the Last In, First Out (LIFO) principle. This means that the last element added to the stack is the first one to be removed. You can implement a stack using an array in JavaScript.
 
+<details>
+<summary>Stack Data Structure Usage</summary>
+
+**_Function Call Management:_**
+The call stack is used to manage function calls in programming languages. When a function is called, its information is pushed onto the stack, and when the function completes execution, it is popped off the stack.
+
+**_Expression Evaluation:_**
+Stacks are often used to evaluate expressions, especially in languages that use postfix (or Reverse Polish Notation) or infix notation. They help in converting expressions from infix to postfix and then evaluating the postfix expression.
+
+**_Undo Mechanisms in Applications:_**
+Undo functionality in applications is often implemented using a stack. Each action that can be undone is pushed onto the stack, and when the user requests an undo, the last action is popped and reversed.
+
+**_Browser History:_**
+Web browsers use a stack to keep track of the pages visited. Each new page visited is pushed onto the stack, and navigating back corresponds to popping the stack.
+
+**_Parsing in Compilers:_**
+Stacks are used in compiler design for parsing expressions and syntax analysis. They help in managing the order of operations and tracking nested structures.
+
+**_Memory Management:_**
+The call stack in a computer's memory is used to manage local variables and function calls. Each function call allocates space on the stack for local variables and parameters.
+
+**_Backtracking Algorithms:_**
+Stack-based backtracking is common in algorithms like depth-first search (DFS). The stack keeps track of the path taken, allowing the algorithm to backtrack when needed.
+
+**_Expression Matching:_**
+Stacks can be used to match parentheses and brackets in expressions, ensuring that they are balanced and properly nested.
+
+**_Task Management in Operating Systems:_**
+The operating system's task or process stack is used to manage the execution of processes and keep track of the function calls within each process.
+
+**_Symbol Balancing in Editors:_**
+Text editors and Integrated Development Environments (IDEs) use stacks to check for balanced symbols such as parentheses, braces, and brackets in the code.
+
+</details>
+<br>
+
 **_Implementation:_**
 
 ```js
@@ -717,6 +754,48 @@ console.log(stack.isEmpty()); // Output: true
 ### Queue
 
 In JavaScript, a queue is a data structure that follows the First In, First Out (FIFO) principle. This means that the first element added to the queue is the first one to be removed. You can implement a queue using an array in JavaScript.
+
+<details>
+<summary>Queue Usage</summary>
+
+**_Task Scheduling:_**
+Operating systems often use queues to schedule processes or tasks. The first task to arrive is the first to be executed.
+
+**_Print Queue:_**
+In a print spooler, documents sent to the printer are placed in a queue. The printer processes them in the order they are received.
+
+**_Breadth-First Search (BFS) in Graphs:_**
+BFS traversal in graphs uses a queue to explore nodes level by level. Nodes are enqueued as they are discovered and dequeued for further exploration.
+
+**_Job Queue in Systems:_**
+Systems that handle multiple tasks or jobs often use a job queue to manage and process tasks in the order they are received.
+
+**_Order Processing in E-commerce:_**
+When orders are placed in an online store, they are often processed in the order they are received, resembling a queue.
+
+**_Buffer in Networking:_**
+In networking, queues are used in routers and switches to manage incoming data packets. Packets wait in a queue until they can be transmitted.
+
+**_Browsing History:_**
+Similar to stacks, queues can be used to manage browsing history in web browsers. The first page visited is the first one to be removed when the history limit is reached.
+
+**_Message Queues in Inter-process Communication:_**
+Queues are used for communication between different processes. Messages are sent to a queue and retrieved by the receiving process in a first-come, first-served manner.
+
+**_Print Spooling:_**
+Print jobs sent to a printer are often stored in a print spooler queue. The printer processes them one by one.
+
+**_Task Management in Asynchronous Programming:_**
+In asynchronous programming, a queue is often used to manage the execution of tasks or callbacks. Tasks are queued up and executed in the order they are received.
+
+**_Request Handling in Web Servers:_**
+Web servers often use queues to manage incoming requests. Requests are processed in the order they are received.
+
+**_Waiting Lines in Simulations:_**
+Queues are commonly used in simulations to model waiting lines, such as customers waiting in line at a bank or in a supermarket.
+
+</details>
+<br>
 
 **_Implementation_**
 
@@ -790,7 +869,7 @@ console.log(queue.isEmpty()); // Output: true
 
 **_More optimized queue data structure implementation_**
 
-> Previous queue DS implementation was with array which is not performant when the size of the array grows. For instance, we were dequeueing with the array method shift which is linear time complexity. In this optimized queue DS implementation we used object instead of array cause operating in object is more performant that operating in array.
+> Previous queue DS implementation was with array which is not performant when the size of the array grows. For instance, we were dequeueing with the array method shift which is linear time complexity. In this optimized queue DS implementation we used object instead of array cause operating in object is more performant than operating in array.
 
 ```js
 class Queue {
@@ -817,17 +896,17 @@ class Queue {
     return element;
   }
 
-  // Return the front element without removing it
-  peek() {
-    if (this.front === this.rear) {
-      return "Queue is empty";
-    }
-    return this.items[this.front];
-  }
-
   // Check if the queue is empty
   isEmpty() {
     return this.front === this.rear;
+  }
+
+  // Return the front element without removing it
+  peek() {
+    if (this.isEmpty()) {
+      return "Queue is empty";
+    }
+    return this.items[this.front];
   }
 
   // Return the size of the queue
@@ -867,4 +946,110 @@ queue.print(); // { '2': 3 }
 queue.clear();
 console.log(queue.isEmpty()); // Output: true
 queue.print(); // {}
+```
+
+### _Circular Queue_
+
+The size of the Circular Queue is fixed and a single block of memory is used as if the first element is connected to the last element.
+<br>
+Also referred to as circular buffer or ring buffer and follows the FIFO principle.
+<br>
+A circular queue will reuse the empty block created during the dequeue operation.
+<br>
+When working with queue of fixed maximum size, a circular queue is a great implementation choice.
+
+<details>
+<summary>Circular Queue Usage</summary>
+
+- Clock
+- Streaming Data
+- Traffic lights
+</details>
+<br>
+
+```js
+class CircularQueue {
+  constructor(capacity) {
+    this.items = new Array(capacity);
+    this.rear = -1;
+    this.front = -1;
+    this.currentLength = 0;
+    this.capacity = capacity;
+  }
+
+  isFull() {
+    return this.currentLength === this.capacity;
+  }
+
+  isEmpty() {
+    return this.currentLength === 0;
+  }
+
+  size() {
+    return this.currentLength;
+  }
+
+  enqueue(item) {
+    if (!this.isFull()) {
+      this.rear = (this.rear + 1) % this.capacity;
+      this.items[this.rear] = item;
+      this.currentLength += 1;
+      if (this.front === -1) {
+        this.front = this.rear;
+      }
+    }
+  }
+
+  dequeue() {
+    if (this.isEmpty()) {
+      return null;
+    }
+    const item = this.items[this.front];
+    this.items[this.front] = null;
+    this.front = (this.front + 1) % this.capacity;
+    this.currentLength -= 1;
+    if (this.isEmpty()) {
+      this.front = -1;
+      this.rear = -1;
+    }
+    return item;
+  }
+
+  peek() {
+    if (!this.isEmpty()) {
+      return this.items[this.front];
+    }
+    return null;
+  }
+
+  print() {
+    if (this.isEmpty()) {
+      console.log("Queue is empty");
+    } else {
+      let i;
+      let str = "";
+      for (i = this.front; i !== this.rear; i = (i + 1) % this.capacity) {
+        str += this.items[i] + " ";
+      }
+      str += this.items[i];
+      console.log(str);
+    }
+  }
+}
+
+const queue = new CircularQueue(5);
+console.log(queue.isEmpty()); // true
+queue.enqueue(10);
+queue.enqueue(20);
+queue.enqueue(30);
+queue.enqueue(40);
+queue.enqueue(50);
+console.log(queue.size()); // 5
+queue.print(); // 10 20 30 40 50
+console.log(queue.isFull()); // true
+console.log(queue.dequeue()); // 10
+console.log(queue.peek()); // 20
+queue.print(); // 20 30 40 50
+queue.enqueue(60);
+queue.print(); // 20 30 40 50 60
 ```

@@ -687,6 +687,11 @@ class Stack {
   clear() {
     this.items = [];
   }
+
+  // Print the items
+  print() {
+    console.log(this.items.toString());
+  }
 }
 
 // Example usage:
@@ -756,6 +761,11 @@ class Queue {
   clear() {
     this.items = [];
   }
+
+  // Print the items
+  print() {
+    console.log(this.items.toString());
+  }
 }
 
 // Example usage:
@@ -776,4 +786,85 @@ console.log(queue.size()); // Output: 1
 
 queue.clear();
 console.log(queue.isEmpty()); // Output: true
+```
+
+**_More optimized queue data structure implementation_**
+
+> Previous queue DS implementation was with array which is not performant when the size of the array grows. For instance, we were dequeueing with the array method shift which is linear time complexity. In this optimized queue DS implementation we used object instead of array cause operating in object is more performant that operating in array.
+
+```js
+class Queue {
+  constructor() {
+    this.items = {};
+    this.front = 0;
+    this.rear = 0;
+  }
+
+  // Add element to the end of the queue
+  enqueue(element) {
+    this.items[this.rear] = element;
+    this.rear++;
+  }
+
+  // Remove and return the front element from the queue
+  dequeue() {
+    if (this.front === this.rear) {
+      return "Underflow";
+    }
+    const element = this.items[this.front];
+    delete this.items[this.front];
+    this.front++;
+    return element;
+  }
+
+  // Return the front element without removing it
+  peek() {
+    if (this.front === this.rear) {
+      return "Queue is empty";
+    }
+    return this.items[this.front];
+  }
+
+  // Check if the queue is empty
+  isEmpty() {
+    return this.front === this.rear;
+  }
+
+  // Return the size of the queue
+  size() {
+    return this.rear - this.front;
+  }
+
+  // Clear the queue
+  clear() {
+    this.items = {};
+    this.front = 0;
+    this.rear = 0;
+  }
+
+  print() {
+    console.log(this.items);
+  }
+}
+
+// Example usage:
+const queue = new Queue();
+
+queue.enqueue(1);
+queue.enqueue(2);
+queue.enqueue(3);
+queue.print(); // { '0': 1, '1': 2, '2': 3 }
+console.log(queue.peek()); // Output: 1
+
+console.log(queue.dequeue()); // Output: 1
+console.log(queue.dequeue()); // Output: 2
+
+console.log(queue.isEmpty()); // Output: false
+
+console.log(queue.size()); // Output: 1
+queue.print(); // { '2': 3 }
+
+queue.clear();
+console.log(queue.isEmpty()); // Output: true
+queue.print(); // {}
 ```

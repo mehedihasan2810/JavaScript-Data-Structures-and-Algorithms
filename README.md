@@ -20,6 +20,8 @@
     - [Insertion Sort](#insertion-sort)
     - [Quick Sort](#quick-sort)
     - [Merge Sort](#merge-sort)
+  - ### [Miscellaneous Algorithms](#miscellaneous-algorithms)
+    - [Cartesian Product](#cartesian-product)
 
 ## Big O Notation
 
@@ -477,7 +479,7 @@ console.log(arr2); // [ 8, 20, -6, -2, 4 ]
 ### Merge Sort
 
 <details>
-<summary>Quick Sort Idea</summary>
+<summary>Merge Sort Idea</summary>
 - Divide the array into sub arrays, each containing only one element (An array with one element is considered sorted)
 <br>
 - Repeatedly merge the sub arrays to produce new sorted sub arrays until there is only one sub array remaining. That will be the sorted array.
@@ -511,4 +513,27 @@ function merge(leftArr, rightArr) {
 
 const arr = [8, 20, -2, 4, -6];
 console.log(mergesort(arr)); // [-6, -2, 4, 8, 20]
+```
+
+## Miscellaneous Algorithms
+
+### Cartesian Product
+
+```js
+// Big-O - O(mn) // depends on length. As both array input lengths could be different hence Big-O is O(mn) instead O(n^2)
+function cartesianProduct(arr1, arr2) {
+  const result = [];
+
+  for (let i = 0; i < arr1.length; i++) {
+    for (let j = 0; j < arr2.length; j++) {
+      result.push([arr1[i], arr2[j]]);
+    }
+  }
+
+  return result;
+}
+
+const arr1 = [1, 3];
+const arr2 = [2, 4, 5];
+console.log(cartesianProduct(arr1, arr2)); // [ [ 1, 2 ], [ 1, 4 ], [ 1, 5 ], [ 3, 2 ], [ 3, 4 ], [ 3, 5 ] ]
 ```

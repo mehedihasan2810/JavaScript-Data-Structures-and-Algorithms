@@ -1059,6 +1059,31 @@ queue.print(); // 20 30 40 50 60
 
 ### Linked List
 
+A linked list is a linear data structure in which elements are stored in nodes, and each node points to the next node in the sequence. Unlike arrays, linked lists do not have a fixed size, and their elements can be dynamically allocated. The basic components of a linked list include nodes and pointers.
+
+<details>
+<summary>Most common usage of linked list</summary>
+
+**_Dynamic Memory Allocation:_**
+Linked lists are useful when the size of the data structure is not known in advance or may change frequently. They allow for dynamic memory allocation, as nodes can be added or removed easily without the need for contiguous memory.
+
+**_Implementation of Data Structures:_**
+Linked lists are fundamental in the implementation of various data structures such as stacks, queues, and symbol tables. For example, a stack or a queue can be easily implemented using a linked list by manipulating the pointers to achieve last-in-first-out (LIFO) or first-in-first-out (FIFO) behavior.
+
+**_Memory Management:_**
+Linked lists are used in memory management systems, like the free block list in dynamic memory allocation. The free memory blocks are maintained in a linked list, and when memory is requested, the allocator can efficiently find and allocate the appropriate-sized block.
+
+**_Undo Functionality in Software:_**
+Linked lists are often used to implement undo functionality in software applications. Each action performed is stored as a node in a linked list, and by traversing the list backward, the application can undo each action in sequence.
+
+**_File Systems:_**
+Linked lists are employed in file systems to represent the structure of directories and files. Each directory or file is represented as a node, and the pointers link the nodes together to form the hierarchy. This allows for efficient traversal and manipulation of the file system structure.
+
+</details>
+<br>
+
+**_Implementation (without tail pointer):_**
+
 ```js
 class Node {
   constructor(value) {
@@ -1273,4 +1298,274 @@ linkedList.print(); // 60 40 20
 
 linkedList.insert(70, 2);
 linkedList.print(); // 60 40 70 20
+```
+
+**_Implementation (with tail pointer - more optimized):_**
+
+```js
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
+
+class LinkedList {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
+  }
+
+  isEmpty() {
+    return this.size === 0;
+  }
+
+  getSize() {
+    return this.size;
+  }
+
+  // Big-O - constant O(1)
+  prepend(value) {
+    const node = new Node(value);
+    if (this.isEmpty()) {
+      this.head = node;
+      this.tail = node;
+    } else {
+      node.next = this.head;
+      this.head = node;
+    }
+
+    this.size++;
+  }
+
+  // Big-O - constant O(1)
+  append(value) {
+    const node = new Node(value);
+
+    if (this.isEmpty()) {
+      this.head = node;
+      this.tail = node;
+    } else {
+      this.tail.next = node;
+      this.tail = node;
+    }
+
+    this.size++;
+  }
+
+  insert(value, index) {
+    if (index < 0 || index > this.size) {
+      console.log("Invalid index");
+      return;
+    }
+
+    if (index === 0) {
+      this.prepend(value);
+    } else {
+      const node = new Node(value);
+      let prev = this.head;
+
+      for (let i = 0; i < index - 1; i++) {
+        prev = prev.next;
+      }
+
+      node.next = prev.next;
+      prev.next = node;
+
+      this.size++;
+    }
+  }
+
+  removeFromFront() {
+    if (this.isEmpty()) {
+      console.log("List is empty");
+      return null;
+    }
+
+    const value = this.head.value;
+
+    if (this.size === 1) {
+      this.head = null;
+      this.tail = null;
+
+      this.size--;
+
+      return value;
+    }
+
+    // const value = this.head.value;
+    this.head = this.head.next;
+
+    this.size--;
+
+    return value;
+  }
+
+  removeFrom(index) {
+    if (index < 0 || index >= this.size) {
+      console.log("invalid index! index is not in the list");
+      return null;
+    }
+
+    let removedNode;
+
+    if (index === 0) {
+      removedNode = this.head;
+      this.head = this.head.next;
+    } else {
+      let prev = this.head;
+
+      for (let i = 0; i < index - 1; i++) {
+        prev = prev.next;
+      }
+
+      removedNode = prev.next;
+      prev.next = removedNode.next;
+    }
+
+    this.size--;
+    return removedNode.value;
+  }
+
+  removeFromEnd() {
+    if (this.isEmpty()) {
+      return null;
+    }
+
+    const value = this.tail.value;
+
+    if (this.size === 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      let prev = this.head;
+      while (prev.next !== this.tail) {
+        prev = prev.next;
+      }
+      prev.next = null;
+      this.tail = prev;
+    }
+
+    this.size--;
+    return value;
+  }
+
+  removeValue(value) {
+    if (this.isEmpty()) {
+      console.log("list is empty");
+      return null;
+    }
+
+    if (this.head.value === value) {
+      this.head = this.head.next;
+      this.size--;
+      console.log("Node has been deleted");
+      return value;
+    } else {
+      let prev = this.head;
+
+      while (prev.next && prev.next.value !== value) {
+        prev = prev.next;
+      }
+
+      if (prev.next) {
+        const removedNode = prev.next;
+        prev.next = removedNode.next;
+        this.size--;
+        console.log("Node has been deleted");
+        return value;
+      }
+
+      return null;
+    }
+  }
+
+  search(value) {
+    if (this.isEmpty()) {
+      return -1;
+    }
+
+    let index = 0;
+    let curr = this.head;
+
+    while (curr) {
+      if (curr.value === value) {
+        return index;
+      }
+      curr = curr.next;
+      index++;
+    }
+
+    return -1;
+  }
+
+  reverse() {
+    let prev = null;
+    let curr = this.head;
+
+    while (curr) {
+      let next = curr.next;
+      curr.next = prev;
+      prev = curr;
+      curr = next;
+    }
+
+    this.head = prev;
+  }
+
+  print() {
+    if (this.isEmpty()) {
+      console.log("List is empty");
+    } else {
+      let curr = this.head;
+      let listValues = "";
+
+      while (curr) {
+        listValues += `${curr.value} `;
+        curr = curr.next;
+      }
+
+      console.log(listValues);
+    }
+  }
+}
+
+const linkedList = new LinkedList();
+
+console.log(linkedList.getSize()); // 0
+console.log(linkedList.isEmpty()); // true
+
+linkedList.append(20);
+linkedList.append(30);
+linkedList.append(40);
+linkedList.append(50);
+
+linkedList.print(); // 20 30 40 50
+
+linkedList.removeFromFront();
+
+linkedList.print(); // 30 40 50
+
+console.log(linkedList.getSize()); // 3
+console.log(linkedList.isEmpty()); // false
+linkedList.print(); // 30 40 50
+
+console.log(linkedList.removeFrom(1)); // 40
+linkedList.print(); // 30 50
+
+linkedList.append(60);
+linkedList.print(); // 30 50 60
+
+console.log(linkedList.removeValue(50)); // 50
+linkedList.print(); // 30 60
+
+console.log(linkedList.search(60)); // 1
+console.log(linkedList.search(90)); // -1
+
+linkedList.reverse();
+linkedList.print(); // 60 30
+
+linkedList.insert(70, 2);
+linkedList.print(); // 60 30 70
 ```

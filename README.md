@@ -35,6 +35,9 @@
     - [Queue](#queue)
     - [Circular Queue](#circular-queue)
     - [Linked List](#linked-list)
+      - [Linked List Implementation](#implementation-without-tail-pointer)
+      - [Linked List Optimized Implementation](#implementation-with-tail-pointer---more-optimized)
+    - [Linked List Stack](#linked-list-stack)
 
 ## Big O Notation
 
@@ -1082,7 +1085,7 @@ Linked lists are employed in file systems to represent the structure of director
 </details>
 <br>
 
-**_Implementation (without tail pointer):_**
+#### **_Implementation (without tail pointer):_**
 
 ```js
 class Node {
@@ -1300,7 +1303,7 @@ linkedList.insert(70, 2);
 linkedList.print(); // 60 40 70 20
 ```
 
-**_Implementation (with tail pointer - more optimized):_**
+#### **_Implementation (with tail pointer - more optimized):_**
 
 ```js
 class Node {
@@ -1568,4 +1571,61 @@ linkedList.print(); // 60 30
 
 linkedList.insert(70, 2);
 linkedList.print(); // 60 30 70
+```
+
+### Linked List Stack
+
+> We can implement stack data structure by reusing the linked list data structure
+
+**_Implementation:_**
+
+```js
+class LinkedListStack {
+  constructor() {
+    // we are reusing the LikedList data structure
+    this.list = new LinkedList();
+  }
+
+  push(value) {
+    this.list.prepend(value);
+  }
+
+  pop() {
+    return this.list.removeFromFront();
+  }
+
+  peek() {
+    return this.list.head.value;
+  }
+
+  getSize() {
+    return this.list.getSize();
+  }
+
+  isEmpty() {
+    return this.list.isEmpty();
+  }
+
+  print() {
+    this.list.print();
+  }
+}
+
+const stack = new LinkedListStack();
+
+console.log(stack.isEmpty()); // true
+console.log(stack.getSize()); // 0
+
+stack.push(10);
+stack.push(20);
+stack.push(30);
+
+console.log(stack.isEmpty()); // false
+console.log(stack.getSize()); // 3
+
+console.log(stack.peek()); // 30
+
+stack.print(); // 30 20 10
+stack.pop();
+stack.print(); // 20 10
 ```

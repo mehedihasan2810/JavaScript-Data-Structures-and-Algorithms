@@ -34,6 +34,7 @@
     - [Stack](#stack)
     - [Queue](#queue)
     - [Circular Queue](#circular-queue)
+    - [Linked List](#linked-list)
 
 ## Big O Notation
 
@@ -967,6 +968,8 @@ When working with queue of fixed maximum size, a circular queue is a great imple
 </details>
 <br>
 
+**_Implementation:_**
+
 ```js
 class CircularQueue {
   constructor(capacity) {
@@ -1052,4 +1055,222 @@ console.log(queue.peek()); // 20
 queue.print(); // 20 30 40 50
 queue.enqueue(60);
 queue.print(); // 20 30 40 50 60
+```
+
+### Linked List
+
+```js
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
+
+class LinkedList {
+  constructor() {
+    this.head = null;
+    this.size = 0;
+  }
+
+  isEmpty() {
+    return this.size === 0;
+  }
+
+  getSize() {
+    return this.size;
+  }
+
+  // Big-O - constant O(1)
+  prepend(value) {
+    const node = new Node(value);
+
+    if (this.isEmpty()) {
+      this.head = node;
+    } else {
+      node.next = this.head;
+      this.head = node;
+    }
+
+    this.size++;
+  }
+
+  // Big-O - linear O(n)
+  append(value) {
+    const node = new Node(value);
+    if (this.isEmpty()) {
+      this.head = node;
+    } else {
+      let prev = this.head;
+
+      while (prev.next) {
+        prev = prev.next;
+      }
+
+      prev.next = node;
+    }
+
+    this.size++;
+  }
+
+  insert(value, index) {
+    if (index < 0 || index > this.size) {
+      console.log("Invalid index");
+      return;
+    }
+
+    if (index === 0) {
+      this.prepend(value);
+    } else {
+      const node = new Node(value);
+      let prev = this.head;
+
+      for (let i = 0; i < index - 1; i++) {
+        prev = prev.next;
+      }
+
+      node.next = prev.next;
+      prev.next = node;
+
+      this.size++;
+    }
+  }
+
+  removeFrom(index) {
+    if (index < 0 || index >= this.size) {
+      console.log("invalid index! index is not in the list");
+      return null;
+    }
+
+    let removedNode;
+
+    if (index === 0) {
+      removedNode = this.head;
+      this.head = this.head.next;
+    } else {
+      let prev = this.head;
+
+      for (let i = 0; i < index - 1; i++) {
+        prev = prev.next;
+      }
+
+      removedNode = prev.next;
+      prev.next = removedNode.next;
+    }
+
+    this.size--;
+    return removedNode.value;
+  }
+
+  removeValue(value) {
+    if (this.isEmpty()) {
+      console.log("list is empty");
+      return null;
+    }
+
+    if (this.head.value === value) {
+      this.head = this.head.next;
+      this.size--;
+      console.log("Node has been deleted");
+      return value;
+    } else {
+      let prev = this.head;
+
+      while (prev.next && prev.next.value !== value) {
+        prev = prev.next;
+      }
+
+      if (prev.next) {
+        const removedNode = prev.next;
+        prev.next = removedNode.next;
+        this.size--;
+        console.log("Node has been deleted");
+        return value;
+      }
+
+      return null;
+    }
+  }
+
+  search(value) {
+    if (this.isEmpty()) {
+      return -1;
+    }
+
+    let index = 0;
+    let curr = this.head;
+
+    while (curr) {
+      if (curr.value === value) {
+        return index;
+      }
+      curr = curr.next;
+      index++;
+    }
+
+    return -1;
+  }
+
+  reverse() {
+    let prev = null;
+    let curr = this.head;
+
+    while (curr) {
+      let next = curr.next;
+      curr.next = prev;
+      prev = curr;
+      curr = next;
+    }
+
+    this.head = prev;
+  }
+
+  print() {
+    if (this.isEmpty()) {
+      console.log("List is empty");
+    } else {
+      let curr = this.head;
+      let listValues = "";
+
+      while (curr) {
+        listValues += `${curr.value} `;
+        curr = curr.next;
+      }
+
+      console.log(listValues);
+    }
+  }
+}
+
+const linkedList = new LinkedList();
+
+console.log(linkedList.getSize()); // 0
+console.log(linkedList.isEmpty()); // true
+
+linkedList.append(20);
+linkedList.append(30);
+linkedList.append(40);
+linkedList.append(50);
+
+console.log(linkedList.getSize()); // 4
+console.log(linkedList.isEmpty()); // false
+linkedList.print(); // 20 30 40 50
+
+console.log(linkedList.removeFrom(1)); // 30
+linkedList.print(); // 20 40 50
+
+linkedList.append(60);
+linkedList.print(); // 20 40 50 60
+
+console.log(linkedList.removeValue(50)); // 50
+linkedList.print(); // 20 40 60
+
+console.log(linkedList.search(40)); // 1
+console.log(linkedList.search(90)); // -1
+
+linkedList.reverse();
+linkedList.print(); // 60 40 20
+
+linkedList.insert(70, 2);
+linkedList.print(); // 60 40 70 20
 ```

@@ -38,6 +38,7 @@
       - [Linked List Implementation](#implementation-without-tail-pointer)
       - [Linked List Optimized Implementation](#implementation-with-tail-pointer---more-optimized)
     - [Linked List Stack](#linked-list-stack)
+    - [Linked List Queue](#linked-in-queue)
 
 ## Big O Notation
 
@@ -1628,4 +1629,63 @@ console.log(stack.peek()); // 30
 stack.print(); // 30 20 10
 stack.pop();
 stack.print(); // 20 10
+```
+
+### Linked In Queue
+
+> We can implement queue data structure by reusing the linked list data structure
+
+**_Implementation:_**
+
+```js
+class LinkedListQueue {
+  constructor() {
+    this.list = new LinkedList();
+  }
+
+  enqueue(value) {
+    this.list.append(value);
+  }
+
+  dequeue() {
+    return this.list.removeFromFront();
+  }
+
+  peek() {
+    if (this.list.isEmpty()) {
+      return null;
+    }
+    return this.list.head.value;
+  }
+
+  getSize() {
+    return this.list.getSize();
+  }
+
+  isEmpty() {
+    return this.list.isEmpty();
+  }
+
+  print() {
+    this.list.print();
+  }
+}
+
+const queue = new LinkedListQueue();
+
+console.log(queue.isEmpty()); // true
+console.log(queue.getSize()); // 0
+
+queue.enqueue(10);
+queue.enqueue(20);
+queue.enqueue(30);
+
+console.log(queue.isEmpty()); // false
+console.log(queue.getSize()); // 3
+
+console.log(queue.peek()); // 10
+
+queue.print(); // 10 20 30
+console.log(queue.dequeue());
+queue.print(); // 20 30
 ```

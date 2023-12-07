@@ -43,7 +43,8 @@
     - [Linked List Queue](#linked-in-queue)
     - [Doubly Linked List](#doubly-linked-list)
     - [Hash Table / Hash Map](#hash-table--hash-map)
-    - [Binary Search Tree](#binary-search-tree)
+    - [Tree](#tree)
+      - [Binary Search Tree](#binary-search-tree-bst)
 
 ## Big O Notation
 
@@ -1985,7 +1986,6 @@ table.display();
       A-->C
       B-->E
       B-->F
-
 ```
 
 <br>
@@ -2051,6 +2051,65 @@ For example, in a binary tree, the maximum degree is 2 because each node can hav
 </details>
 <br>
 
+### Binary Search Tree (BST)
+
+<br>
+
+```mermaid
+    graph TB;
+      10-->5
+      10-->15
+      5-->3
+      5-->7
+```
+
+<br>
+
+Binary Search Tree is tree data structure where -
+
+- The value of each left node must be smaller than the parent node
+- The value of each right node must be greater than the parent node
+- Each node has at most two children
+
+<details>
+<summary>
+Binary Search Tree Usage
+</summary>
+
+- Searching
+- Sorting
+- To implement abstract data types such as lookup tables and priority queues
+</details>
+<br>
+
+<details>
+<summary>
+Tree Traversal
+</summary>
+
+Tree Traversal means Visiting every node in the tree.
+<br>
+A hierarchical data structure like a tree can be traversed in different ways.
+
+1.  Depth First Search (DFS)
+
+    - The DFS algorithm starts at the root node and explores as far as possible along
+      each branch before backtracking
+    - Visit the root node, visit all the nodes in the left subtree and visit all the nodes in
+      the right subtree
+    - Depending on the order in which we do this, there can be three types of DFS
+      traversals
+
+      1. Preorder Traversal
+      2. Inorder Traversal
+      3. Postorder Traversal
+
+2.  Breadth First Search (BFS)
+
+    - Explore all nodes at the present depth prior to moving on to the nodes at the next depth level
+    </details>
+    <br>
+
 ```js
 class Node {
   constructor(value) {
@@ -2070,8 +2129,8 @@ class BinarySearchTree {
   }
 
   insert(value) {
+    // If the current root is null, a new node with the value is created and assigned as root node.
     const newNode = new Node(value);
-
     if (this.isEmpty()) {
       this.root = newNode;
     } else {
@@ -2080,15 +2139,24 @@ class BinarySearchTree {
   }
 
   _insertNode(root, newNode) {
+    // If the value is less than the current root's value, the insertion is done in the left subtree.
     if (newNode.value < root.value) {
+      // if left pointer empty point it to the new node
       if (root.left === null) {
         root.left = newNode;
+
+        // else recursively check if there's empty spot below
       } else {
         this._insertNode(root.left, newNode);
       }
+
+      // If the value is greater, the insertion is done in the right subtree.
     } else {
+      // if right pointer empty point it to the new node
       if (root.right === null) {
         root.right = newNode;
+
+        // else recursively check if there's empty spot below
       } else {
         this._insertNode(root.right, newNode);
       }
@@ -2100,75 +2168,104 @@ class BinarySearchTree {
   }
 
   _searchNode(root, value) {
+    // If the current node is null, return null.
     if (!root) {
-      return false;
+      return null;
     } else {
+      // If the current node's value matches the target value, return the current value.
       if (root.value === value) {
         return value;
+
+        // If the target value is less than the current node's value, recurse on the left subtree.
       } else if (value < root.value) {
         return this._searchNode(root.left, value);
+
+        // If the target value is greater, recurse on the right subtree.
       } else {
         return this._searchNode(root.right, value);
       }
     }
   }
 
-  // Traversal
-  // Depth First Search - PreOrder
+  // Depth First Search
+  // PreOrder Traversal
   preOrder(callback) {
     this._preOrder(this.root, callback);
   }
 
   _preOrder(root, callback) {
     if (root) {
+      // 1. Read the data of the node
       callback(root.value);
+
+      // 2. Visit the left subtree
       this._preOrder(root.left, callback);
+
+      // 3. Visit the right subtree
       this._preOrder(root.right, callback);
     }
   }
 
-  // Traversal
-  // Depth First Search - inOrder
+  // Depth First Search
+  // InOrder Traversal
   inOrder(callback) {
     this._inOrder(this.root, callback);
   }
 
   _inOrder(root, callback) {
     if (root) {
+      // 1. Visit the left subtree
       this._inOrder(root.left, callback);
+
+      // 2. Read the data of the node
       callback(root.value);
+
+      // 3. Visit the right subtree
       this._inOrder(root.right, callback);
     }
   }
 
-  // Traversal
-  // Depth First Search - postOrder
+  // Depth First Search
+  // PostOrder Traversal
   postOrder(callback) {
     this._postOrder(this.root, callback);
   }
 
   _postOrder(root, callback) {
     if (root) {
+      // 1. Visit the left subtree
       this._postOrder(root.left, callback);
+
+      // 2. Visit the right subtree
       this._postOrder(root.right, callback);
+
+      // 3. Read the data of the node
       callback(root.value);
     }
   }
 
-  // Traversal
   // Breadth First Search
+  // LevelOrder Traversal
   levelOrder(callback) {
+    // 1. Create a queue
     // Check the queue implementation above
     const queue = new Queue();
+
+    // 2. Enqueue the root node
     queue.enqueue(this.root);
 
     while (queue.size()) {
+      // a. Dequeue the node from the front
       let curr = queue.dequeue();
+
+      // b. Read the node's value
       callback(curr.value);
+
+      // C. Enqueue the node's left child if it exists
       if (curr.left) {
         queue.enqueue(curr.left);
       }
-
+      // d. Enqueue the node's right child if it exists
       if (curr.right) {
         queue.enqueue(curr.right);
       }
@@ -2199,22 +2296,30 @@ class BinarySearchTree {
     if (root === null) {
       return root;
     }
-
+    // if value is less than root value then traverse the left subtree
     if (value < root.value) {
       root.left = this._deleteNode(root.left, value);
+
+      // if value is greater than root value then traverse the right subtree
     } else if (value > root.value) {
       root.right = this._deleteNode(root.right, value);
     } else {
+      // Case 1: Node with No Children (Leaf Node):
+      // - Simply remove the node.
       if (!root.left && !root.right) {
         return null;
       }
 
+      // Case 2: Node with One Child:
+      // - Remove the node and replace it with its child.
       if (!root.left) {
         return root.right;
       } else if (!root.right) {
         return root.left;
       }
 
+      // Case 3: Node with Two Children:
+      // - Find the node's in-order successor (or predecessor), replace the node's value with the successor's value, and then recursively delete the successor.
       root.value = this.min(root.right);
       root.right = this._deleteNode(root.right, root.value);
     }
@@ -2260,5 +2365,5 @@ console.log(bst.max()); // 15
 
 console.log(bst.isEmpty()); // false
 console.log(bst.search(5)); // 5
-console.log(bst.search(2)); // false
+console.log(bst.search(2)); // null
 ```

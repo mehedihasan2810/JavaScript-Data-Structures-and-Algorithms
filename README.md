@@ -1928,3 +1928,217 @@ table.display();
 ```
 
 [🔼 Back to top](#data-structures)
+
+### Binary Search Tree
+
+```js
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+class BinarySearchTree {
+  constructor() {
+    this.root = null;
+  }
+
+  isEmpty() {
+    return this.root === null;
+  }
+
+  insert(value) {
+    const newNode = new Node(value);
+
+    if (this.isEmpty()) {
+      this.root = newNode;
+    } else {
+      this._insertNode(this.root, newNode);
+    }
+  }
+
+  _insertNode(root, newNode) {
+    if (newNode.value < root.value) {
+      if (root.left === null) {
+        root.left = newNode;
+      } else {
+        this._insertNode(root.left, newNode);
+      }
+    } else {
+      if (root.right === null) {
+        root.right = newNode;
+      } else {
+        this._insertNode(root.right, newNode);
+      }
+    }
+  }
+
+  search(value) {
+    return this._searchNode(this.root, value);
+  }
+
+  _searchNode(root, value) {
+    if (!root) {
+      return false;
+    } else {
+      if (root.value === value) {
+        return value;
+      } else if (value < root.value) {
+        return this._searchNode(root.left, value);
+      } else {
+        return this._searchNode(root.right, value);
+      }
+    }
+  }
+
+  // Traversal
+  // Depth First Search - PreOrder
+  preOrder(callback) {
+    this._preOrder(this.root, callback);
+  }
+
+  _preOrder(root, callback) {
+    if (root) {
+      callback(root.value);
+      this._preOrder(root.left, callback);
+      this._preOrder(root.right, callback);
+    }
+  }
+
+  // Traversal
+  // Depth First Search - inOrder
+  inOrder(callback) {
+    this._inOrder(this.root, callback);
+  }
+
+  _inOrder(root, callback) {
+    if (root) {
+      this._inOrder(root.left, callback);
+      callback(root.value);
+      this._inOrder(root.right, callback);
+    }
+  }
+
+  // Traversal
+  // Depth First Search - postOrder
+  postOrder(callback) {
+    this._postOrder(this.root, callback);
+  }
+
+  _postOrder(root, callback) {
+    if (root) {
+      this._postOrder(root.left, callback);
+      this._postOrder(root.right, callback);
+      callback(root.value);
+    }
+  }
+
+  // Traversal
+  // Breadth First Search
+  levelOrder(callback) {
+    // Check the queue implementation above
+    const queue = new Queue();
+    queue.enqueue(this.root);
+
+    while (queue.size()) {
+      let curr = queue.dequeue();
+      callback(curr.value);
+      if (curr.left) {
+        queue.enqueue(curr.left);
+      }
+
+      if (curr.right) {
+        queue.enqueue(curr.right);
+      }
+    }
+  }
+
+  min(root = this.root) {
+    if (!root.left) {
+      return root.value;
+    } else {
+      return this.min(root.left);
+    }
+  }
+
+  max(root = this.root) {
+    if (!root.right) {
+      return root.value;
+    } else {
+      return this.max(root.right);
+    }
+  }
+
+  delete(value) {
+    this.root = this._deleteNode(this.root, value);
+  }
+
+  _deleteNode(root, value) {
+    if (root === null) {
+      return root;
+    }
+
+    if (value < root.value) {
+      root.left = this._deleteNode(root.left, value);
+    } else if (value > root.value) {
+      root.right = this._deleteNode(root.right, value);
+    } else {
+      if (!root.left && !root.right) {
+        return null;
+      }
+
+      if (!root.left) {
+        return root.right;
+      } else if (!root.right) {
+        return root.left;
+      }
+
+      root.value = this.min(root.right);
+      root.right = this._deleteNode(root.right, root.value);
+    }
+
+    return root;
+  }
+}
+
+const bst = new BinarySearchTree();
+
+console.log(bst.isEmpty()); // true
+
+bst.insert(10);
+bst.insert(5);
+bst.insert(15);
+bst.insert(3);
+bst.insert(7);
+
+const preOrderResult = [];
+bst.preOrder((value) => preOrderResult.push(value));
+console.log(preOrderResult); // [ 10, 5, 3, 7, 15 ]
+
+const inOrderResult = [];
+bst.inOrder((value) => inOrderResult.push(value));
+console.log(inOrderResult); // [ 3, 5, 7, 10, 15 ]
+
+const postOrderResult = [];
+bst.postOrder((value) => postOrderResult.push(value));
+console.log(postOrderResult); // [ 3, 7, 5, 15, 10 ]
+
+const levelOrderResult = [];
+bst.levelOrder((value) => levelOrderResult.push(value));
+console.log(levelOrderResult); // [ 10, 5, 15, 3, 7 ]
+
+bst.delete(10);
+
+const levelOrderResult2 = [];
+bst.levelOrder((value) => levelOrderResult2.push(value));
+console.log(levelOrderResult2); // [ 15, 5, 3, 7 ]
+
+console.log(bst.min()); // 3
+console.log(bst.max()); // 15
+
+console.log(bst.isEmpty()); // false
+console.log(bst.search(5)); // 5
+console.log(bst.search(2)); // false
+```

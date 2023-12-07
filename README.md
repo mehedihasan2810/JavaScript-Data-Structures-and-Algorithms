@@ -1961,6 +1961,25 @@ table.display();
 <br>
 
 <details>
+<summary>Some common types of tree data structure</summary>
+
+**_Binary Tree:_**
+A tree in which each node has at most two children, referred to as the left child and the right child.
+
+**_Binary Search Tree (BST):_**
+A binary tree with the property that the key in each node is greater than or equal to any key in its left subtree and less than or equal to any key in its right subtree.
+
+**_AVL Tree:_**
+A self-balancing binary search tree where the height difference between the left and right subtrees of any node (the balance factor) is at most 1. This ensures logarithmic height and efficient search, insert, and delete operations.
+
+**_Red-Black Tree:_**
+Another self-balancing binary search tree with the property that each node has a color (either red or black), and the tree is balanced based on certain rules, ensuring logarithmic height.
+
+</details>
+
+<br>
+
+<details>
 <summary>Usage of Tree Data Structure:</summary>
 
 - File systems for directory structure
@@ -2367,3 +2386,5 @@ console.log(bst.isEmpty()); // false
 console.log(bst.search(5)); // 5
 console.log(bst.search(2)); // null
 ```
+
+[🔼 Back to top](#data-structures)

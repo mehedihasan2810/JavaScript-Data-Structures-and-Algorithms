@@ -43,6 +43,7 @@
     - [Linked List Queue](#linked-in-queue)
     - [Doubly Linked List](#doubly-linked-list)
     - [Hash Table / Hash Map](#hash-table--hash-map)
+    - [Binary Search Tree](#binary-search-tree)
 
 ## Big O Notation
 
@@ -1929,7 +1930,126 @@ table.display();
 
 [🔼 Back to top](#data-structures)
 
-### Binary Search Tree
+### Tree
+
+```mermaid
+    graph TB;
+      A-->B
+      A-->C
+      A-->D
+      B-->E
+      B-->F
+      C-->G
+      C-->H
+      D-->I
+      D-->J
+```
+
+<br>
+
+- A tree is a hierarchical data structure that consists of nodes connected by edges
+
+- A tree is a non-linear data structure, compared to arrays, linked lists, stacks and
+  queues which are linear data structures.
+- In linear data structures, the time required to search is proportional to the size of
+  the data set
+- Trees however, owing to the nonlinear nature allow quicker and easier access to
+  the data
+- A tree will not contain any loops or cycles.
+
+<br>
+
+<details>
+<summary>Usage of Tree Data Structure:</summary>
+
+- File systems for directory structure
+
+- A family tree
+
+- An organisation tree
+- DOM
+- Chat bots
+- Abstract syntax trees
+  </details>
+
+    <br>
+
+<details>
+<summary>Terminology:</summary>
+
+<br>
+
+```mermaid
+    graph TB;
+      A-->B
+      A-->C
+      B-->E
+      B-->F
+
+```
+
+<br>
+
+**_Node:_**
+A fundamental building block of a tree that contains data and may have a reference to one or more child nodes. Here `A, B, C, D, E, F` are individual node.
+
+**_Root:_**
+The topmost node in a tree structure. It serves as the starting point for traversing the tree. Here `A` is the root node
+
+**_Parent:_**
+A node in a tree that has one or more child nodes. The node directly above another node is considered its parent. Here `A` is the parent of child `B` and `C`
+
+**_Child:_**
+A node in a tree that is directly connected to another node (its parent) beneath it. Here `B` and `C` is the child of `A`.
+
+**_Leaf:_**
+A node in a tree that has no children, meaning it is a terminal node at the end of a branch. Here `E`, `F` and `C` are the leaf node.
+
+**_Siblings:_**
+Nodes that share the same parent are called siblings. They are on the same level of the tree.
+
+**_Ancestor:_**
+A node that is on a path from a given node to the root node. All ancestors of a node are higher in the tree. Here `A` is the ancestor of `E`
+
+**_Descendant:_**
+A node that is on a path from the root node to a given node. All descendants of a node are below it in the tree.
+
+**_Subtree:_**
+A tree formed by a node and its descendants.
+
+**_Level:_**
+The level of a node is its distance from the root node. The root is considered to be at level 0, and its children are at level 1, and so on.
+
+**_Height:_**
+The height of a tree is the length of the longest path from the root node to a leaf. The height of leaf `E` node is 0 and `A` is 2.
+
+**_Depth:_**
+The depth of a node is the number of edges present in path from the root node of a tree to that node. The depth of `E` is 2 and `A` is 0.
+
+**_Binary Tree:_**
+A tree in which each node has at most two children, referred to as the left child and the right child.
+
+**_Binary Search Tree (BST):_**
+A binary tree in which the left subtree of a node contains only nodes with keys less than the node's key, and the right subtree contains only nodes with keys greater than the node's key.
+
+**_Balanced Tree:_**
+A tree in which the height of the left and right subtrees of any node differs by at most one.
+
+**_Traversal:_**
+The process of visiting all the nodes of a tree in a specific order. Common traversal methods include in-order, pre-order, and post-order.
+
+**_Node Degree:_**
+The degree of a node in a tree is the number of children it has. For example:
+A node with no children (a leaf) has a degree of 0.
+A node with one child has a degree of 1.
+A node with two children (common in binary trees) has a degree of 2.
+
+**_Tree Degree:_**
+The degree of a tree is defined as the maximum degree of any node in the tree. In other words, it is the maximum number of children that any node in the tree has.
+For example, in a binary tree, the maximum degree is 2 because each node can have at most two children. In a ternary tree, the maximum degree is 3, and so on.
+
+</details>
+<br>
 
 ```js
 class Node {

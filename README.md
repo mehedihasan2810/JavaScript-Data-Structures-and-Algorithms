@@ -33,6 +33,8 @@
   - ### [Custom Data Structures](#custom-data-structures)
     - [Stack](#stack)
     - [Queue](#queue)
+    - [Queue (with array)](#implementationwith-array)
+    - [Queue (with object) - optimized](#implementationwith-object---optimized)
     - [Circular Queue](#circular-queue)
     - [Linked List](#linked-list)
       - [Linked List Implementation](#implementation-without-tail-pointer)
@@ -758,6 +760,8 @@ stack.clear();
 console.log(stack.isEmpty()); // Output: true
 ```
 
+[🔼 Back to top](#data-structures)
+
 ### Queue
 
 In JavaScript, a queue is a data structure that follows the First In, First Out (FIFO) principle. This means that the first element added to the queue is the first one to be removed. You can implement a queue using an array in JavaScript.
@@ -804,7 +808,7 @@ Queues are commonly used in simulations to model waiting lines, such as customer
 </details>
 <br>
 
-**_Implementation_**
+#### **_Implementation(with array)_**
 
 ```js
 class Queue {
@@ -874,7 +878,9 @@ queue.clear();
 console.log(queue.isEmpty()); // Output: true
 ```
 
-**_More optimized queue data structure implementation_**
+[🔼 Back to top](#data-structures)
+
+#### **_Implementation(with object) - optimized_**
 
 > Previous queue DS implementation was with array which is not performant when the size of the array grows. For instance, we were dequeueing with the array method shift which is linear time complexity. In this optimized queue DS implementation we used object instead of array cause operating in object is more performant than operating in array.
 
@@ -954,6 +960,8 @@ queue.clear();
 console.log(queue.isEmpty()); // Output: true
 queue.print(); // {}
 ```
+
+[🔼 Back to top](#data-structures)
 
 ### _Circular Queue_
 
@@ -1062,6 +1070,8 @@ queue.print(); // 20 30 40 50
 queue.enqueue(60);
 queue.print(); // 20 30 40 50 60
 ```
+
+[🔼 Back to top](#data-structures)
 
 ### Linked List
 
@@ -1305,6 +1315,8 @@ linkedList.print(); // 60 40 20
 linkedList.insert(70, 2);
 linkedList.print(); // 60 40 70 20
 ```
+
+[🔼 Back to top](#data-structures)
 
 #### **_Implementation (with tail pointer - more optimized):_**
 
@@ -1576,6 +1588,8 @@ linkedList.insert(70, 2);
 linkedList.print(); // 60 30 70
 ```
 
+[🔼 Back to top](#data-structures)
+
 ### Linked List Stack
 
 > We can implement stack data structure by reusing the linked list data structure
@@ -1632,6 +1646,8 @@ stack.print(); // 30 20 10
 stack.pop();
 stack.print(); // 20 10
 ```
+
+[🔼 Back to top](#data-structures)
 
 ### Linked In Queue
 
@@ -1691,6 +1707,8 @@ queue.print(); // 10 20 30
 console.log(queue.dequeue());
 queue.print(); // 20 30
 ```
+
+[🔼 Back to top](#data-structures)
 
 ### Doubly Linked List
 
@@ -1816,6 +1834,8 @@ list.removeFromFront();
 list.print(); // 1<->2<->
 ```
 
+[🔼 Back to top](#data-structures)
+
 ### Hash Table / Hash Map
 
 - Most common usage of Hash Table
@@ -1906,3 +1926,5 @@ table.remove("name");
 
 table.display();
 ```
+
+[🔼 Back to top](#data-structures)

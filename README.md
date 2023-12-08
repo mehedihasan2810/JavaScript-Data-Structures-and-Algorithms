@@ -24,6 +24,7 @@
     - [Cartesian Product](#cartesian-product)
     - [Climbing Staircase](#climbing-staircase)
     - [Tower Of Hanoi](#tower-of-hanoi)
+    - [Prim's, Kruskal's and Floyd's algo](#) ⏳
 - ## [Data Structures](#data-structures)
   - ### [Built In Data Structures](#built-in-data-structures)
     - [Array](#array)
@@ -33,19 +34,25 @@
   - ### [Custom Data Structures](#custom-data-structures)
     - [Stack](#stack)
     - [Queue](#queue)
-    - [Queue (with array)](#implementationwith-array)
-    - [Queue (with object) - optimized](#implementationwith-object---optimized)
-    - [Circular Queue](#circular-queue)
+      - [Queue (with array)](#implementationwith-array)
+      - [Queue (with object) - optimized](#implementationwith-object---optimized)
+      - [Circular Queue](#circular-queue)
+      - [Priority Queue](#) ⏳
     - [Linked List](#linked-list)
       - [Linked List Implementation](#implementation-without-tail-pointer)
       - [Linked List Optimized Implementation](#implementation-with-tail-pointer---more-optimized)
-    - [Linked List Stack](#linked-list-stack)
-    - [Linked List Queue](#linked-in-queue)
-    - [Doubly Linked List](#doubly-linked-list)
+      - [Linked List Stack](#linked-list-stack)
+      - [Linked List Queue](#linked-in-queue)
+      - [Circular Linked List](#) ⏳
+      - [Doubly Linked List](#doubly-linked-list)
     - [Hash Table / Hash Map](#hash-table--hash-map)
     - [Tree](#tree)
       - [Binary Search Tree](#binary-search-tree-bst)
+      - [AVL Trees](#) ⏳
+      - [Red black Trees](#) ⏳
+      - [Tries](#) ⏳
     - [Graph](#graph)
+      - [Directed acyclic graph](#) ⏳
 
 ## Big O Notation
 
@@ -2498,3 +2505,134 @@ console.log(bst.search(2)); // null
 
 - **_Social media sites_** --> Users are considered as vertices and edges are the links between connections. Like facebook, instagram uses graph data structure to show mutual connection, post suggestion and other recommendations.
 </details>
+
+<br>
+
+<details>
+<summary>Graph Representation</summary>
+
+<br>
+
+Graphs are commonly represented in two ways -
+
+1. Adjacency Matrix
+
+   - An adjacency matrix is a 2D array of size V x V where V is the number of vertices in the graph
+   - Each row and column represent a vertex
+   - If the value of any element say, matrix[i][j] is 1, it represents that there is an edge
+     connecting vertex i and vertex j
+   - [Checkout this video to learn more about **_Adjacency Matrix_**](https://youtu.be/9QTHtlAVhmU?si=uA9szpdNR5M_NVPa)
+
+2. Adjacency List
+
+   - [Checkout this video to learn more about **_Adjacency List_**](https://youtu.be/0L6WPq3bT9w?si=bBkRmo0XM5gZxHEH)
+   </details>
+
+<br>
+
+   <details>
+   <summary>Adjacency Matrix vs Adjacency List</summary>
+
+- With an adjacency list, we only need to store the values for the edges that exist. With adjacency matrix, you store values irrespective of whether an edge exists or
+  not. Storage wise, an adjacency list is way more efficient
+
+- With adjacency list, inserting and finding adjacent nodes is constant time
+  complexity whereas with adjacency matrix, it is linear time complexity.
+
+- An adjacency list allows you to store additional values with an edge such as
+  weight of the edge. With adjacency matrix, such information would have to be
+  stored externally
+
+     </details>
+
+     <br>
+
+  **_Graph Implementation(Undirected | Adjacency List)_**
+
+```js
+class Graph {
+  constructor() {
+    this.adjacencyList = {};
+  }
+
+  addVertex(vertex) {
+    if (!this.adjacencyList[vertex]) {
+      this.adjacencyList[vertex] = new Set();
+    }
+  }
+
+  addEdge(vertex1, vertex2) {
+    if (!this.adjacencyList[vertex1]) {
+      this.addVertex(vertex1);
+    }
+
+    if (!this.adjacencyList[vertex2]) {
+      this.addVertex(vertex2);
+    }
+
+    // here add method available in Set data structure
+    this.adjacencyList[vertex1].add(vertex2);
+    this.adjacencyList[vertex2].add(vertex1);
+  }
+
+  removeEdge(vertex1, vertex2) {
+    this.adjacencyList[vertex1].delete(vertex2);
+    this.adjacencyList[vertex2].delete(vertex1);
+  }
+
+  removeVertex(vertex) {
+    if (!this.adjacencyList[vertex]) {
+      return;
+    }
+
+    for (let adjacentVertex of this.adjacencyList[vertex]) {
+      this.removeEdge(vertex, adjacentVertex);
+    }
+
+    delete this.adjacencyList[vertex];
+  }
+
+  hasEdge(vertex1, vertex2) {
+    return (
+      this.adjacencyList[vertex1].has(vertex2) &&
+      this.adjacencyList[vertex2].has(vertex1)
+    );
+  }
+
+  display() {
+    for (let vertex in this.adjacencyList) {
+      console.log(vertex + "->" + [...this.adjacencyList[vertex]]);
+    }
+  }
+}
+
+const graph = new Graph();
+graph.addVertex("A");
+graph.addVertex("B");
+graph.addVertex("C");
+
+graph.addEdge("A", "B");
+graph.addEdge("B", "C");
+
+graph.display();
+// A->B
+// B->A,C
+// C->B
+
+console.log(graph.hasEdge("A", "C")); // false
+
+graph.removeEdge("A", "B");
+
+graph.display();
+// A->
+// B->C
+// C->B
+
+graph.addEdge("A", "B");
+
+graph.removeVertex("B");
+
+graph.display();
+// A->
+// C->
+```

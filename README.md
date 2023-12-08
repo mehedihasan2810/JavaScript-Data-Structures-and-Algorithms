@@ -2490,4 +2490,15 @@ console.log(bst.search(2)); // null
      B ---|2| C
 ```
 
+<br>
+</details>
+
+<br>
+
+<details>
+<summary>Graph Usage</summary>
+
+- **_Google maps_** --> cities are represented as vertices(nodes) and roads are edges(lines) to help build navigation system.
+
+- **_Social media sites_** --> Users are considered as vertices and edges are the links between connections. Like facebook, instagram uses graph data structure to show mutual connection, post suggestion and other recommendations.
 </details>

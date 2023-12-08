@@ -45,6 +45,7 @@
     - [Hash Table / Hash Map](#hash-table--hash-map)
     - [Tree](#tree)
       - [Binary Search Tree](#binary-search-tree-bst)
+    - [Graph](#graph)
 
 ## Big O Notation
 

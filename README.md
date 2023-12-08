@@ -2636,3 +2636,5 @@ graph.display();
 // A->
 // C->
 ```
+
+[🔼 Back to top](#data-structures)

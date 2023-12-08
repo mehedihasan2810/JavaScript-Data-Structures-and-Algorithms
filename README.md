@@ -2482,13 +2482,9 @@ console.log(bst.search(2)); // null
 
 <br>
 
-- Graphs may contain weights on edges representing the const of traversing that edge
+- Graphs may contain weights on edges representing the cost of traversing that edge
 
-```mermaid
-    graph TB;
-     B ---|3| A
-     B ---|2| C
-```
+![weight graph image](/assets//weight-graph.png)
 
 <br>
 </details>

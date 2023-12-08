@@ -2388,3 +2388,105 @@ console.log(bst.search(2)); // null
 ```
 
 [🔼 Back to top](#data-structures)
+
+### Graph
+
+<br>
+
+![simple graph image](/assets/simple-graph.png)
+
+<br>
+
+- A graph is a non-linear data structure that consists of a finite number of vertices
+  (also called nodes) connected by edges
+- Trees are a specific type of graph data structure
+
+<br>
+
+<details>
+<summary>Types of graph</summary>
+
+1. **_Directed graph_**
+
+![simple graph image](/assets/directed-graph.png)
+
+- A graph in which the edges have a direction
+- Edges are usually represented by arrows pointing in
+  the direction the graph can be traversed
+
+ <br>
+
+2. **_Undirected graph_**
+
+![simple graph image](/assets/undirected-graph.png)
+
+- A graph in which the edges are bidirectional
+- The graph can be traversed in either direction
+- The absence of an arrow tells us that the graph is
+  undirected
+
+  <br>
+
+**_More graph types:_**
+
+- A graph can have only vertices(nodes) no edges(lines or direction)
+
+```mermaid
+    graph TB;
+     B ~~~ A
+     B ~~~ C
+```
+
+<br>
+
+- Multiple edges from one node
+
+```mermaid
+    graph LR;
+     B --- A
+     B --- C
+```
+
+<br>
+
+- Cycles in the graph
+
+```mermaid
+    graph LR;
+     B --> C
+     C --> A
+     A --> B
+```
+
+<br>
+
+- Self loops in a node
+
+```mermaid
+    graph LR;
+     B --- A
+     B --- C
+     A --- A
+```
+
+<br>
+
+- Disconnected
+
+```mermaid
+    graph TB;
+     B ~~~ A
+     B --- C
+```
+
+<br>
+
+- Graphs may contain weights on edges representing the const of traversing that edge
+
+```mermaid
+    graph TB;
+     B ---|3| A
+     B ---|2| C
+```
+
+</details>

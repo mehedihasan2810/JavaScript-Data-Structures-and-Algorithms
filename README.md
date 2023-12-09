@@ -452,7 +452,7 @@ function quickSort(arr) {
     return arr;
   }
 
-  const pivot = arr.length - 1;
+  const pivot = arr[arr.length - 1];
   const left = [];
   const right = [];
 
@@ -513,6 +513,11 @@ console.log(arr2); // [ 8, 20, -6, -2, 4 ]
 ```
 
 ### Merge Sort
+
+![an image visualizing how merge sort works](/assets/Merge-Sort-Algorithm.png)
+Source: [101computing](https://www.101computing.net/merge-sort-algorithm/)
+
+Merge sort is defined as a sorting algorithm that works by dividing an array into smaller subarrays, sorting each subarray, and then merging the sorted subarrays back together to form the final sorted array.
 
 <details>
 <summary>Merge Sort Idea</summary>

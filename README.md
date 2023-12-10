@@ -27,6 +27,7 @@
     - [Prim's, Kruskal's and Floyd's algo](#) ⏳
   - ### [Algorithm Patterns](#algorithm-patterns)
     - [Sliding Window](#sliding-window)
+    - [Two Pointers](#two-pointers)
 - ## [Data Structures](#data-structures)
   - ### [Built In Data Structures](#built-in-data-structures)
     - [Array](#array)

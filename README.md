@@ -61,7 +61,7 @@
       - [Min Heap](#min-heap)
       - [Max Heap](#max-heap)
     - [Trie](#trie)
-      - [Trie Implementation](#trie-implementation)
+      - [Trie Implementation](#trie)
 
 ## Big O Notation
 
@@ -707,6 +707,49 @@ console.log(result); // Output: 21 (sum of subarray [1, 0, 20])
 ```
 
 In this example, the maxSubarraySum function takes an array (arr) and a window size (k) as input and returns the maximum sum of a subarray of size k. The algorithm initializes the sum of the first window and then slides the window through the array, updating the sum as it goes. The time complexity of this algorithm is O(n).
+
+[🔼 Back to top](#data-structures)
+
+### Two Pointers
+
+The two pointers algorithm is a technique used to efficiently solve problems that involve arrays or sequences by using two pointers to traverse the array. The basic idea is to maintain two pointers that iterate through the array in a way that reduces the time complexity of the algorithm.
+
+Here's a simple example of the two pointers algorithm in JavaScript. Let's say you have a sorted array of numbers, and you want to find a pair of elements whose sum is equal to a given target value.
+
+```js
+function findPairWithSum(arr, target) {
+  let left = 0; // Pointer starting from the beginning of the array
+  let right = arr.length - 1; // Pointer starting from the end of the array
+
+  while (left < right) {
+    const currentSum = arr[left] + arr[right];
+
+    if (currentSum === target) {
+      return [arr[left], arr[right]]; // Found a pair with the target sum
+    } else if (currentSum < target) {
+      left++; // Move the left pointer to increase the sum
+    } else {
+      right--; // Move the right pointer to decrease the sum
+    }
+  }
+
+  return null; // No pair found with the target sum
+}
+
+// Example usage:
+const sortedArray = [1, 2, 3, 4, 5, 6, 7, 8];
+const targetSum = 10;
+const result = findPairWithSum(sortedArray, targetSum);
+console.log(result); // Output: [3, 7] (3 + 7 = 10)
+```
+
+In this example, the findPairWithSum function takes a sorted array (arr) and a target sum (target) as input and returns a pair of elements whose sum is equal to the target. The algorithm starts with two pointers at the beginning and end of the array and adjusts them based on the comparison of the current sum with the target.
+
+- If the current sum is equal to the target, the algorithm returns the pair.
+- If the current sum is less than the target, it means we need a larger sum, so we move the left pointer to the right.
+- If the current sum is greater than the target, it means we need a smaller sum, so we move the right pointer to the left.
+
+This approach reduces the time complexity from O(n^2) to O(n) for certain problems where a brute force approach would involve nested loops.
 
 [🔼 Back to top](#data-structures)
 
@@ -2810,18 +2853,16 @@ Source: [GeeksForGeeks](https://www.geeksforgeeks.org/heap-data-structure/)
 
 [To understand visually how heap works checkout this freeCodeCamp youtube video](https://youtu.be/-LVmKNvflnY?si=lzG6fvSycqBBYHP3&t=2:33:55)
 
-
 <details>
 <summary>What is Heap?</summary>
 
-
 A heap is a specialized tree-based data structure that satisfies the heap property. In a heap, the elements are arranged in a particular order such that the value of each node is either greater than or equal to (max heap) or less than or equal to (min heap) the values of its children. This ensures that the root of the heap contains either the maximum or minimum element, depending on the type of heap.
 
-***Heaps are commonly implemented as binary heaps, where each node has at most two children. The binary heap has two variations:***
+**_Heaps are commonly implemented as binary heaps, where each node has at most two children. The binary heap has two variations:_**
 
-***Max Heap:*** In a max heap, the value of each node is greater than or equal to the values of its children. Therefore, the maximum element is at the root.
+**_Max Heap:_** In a max heap, the value of each node is greater than or equal to the values of its children. Therefore, the maximum element is at the root.
 
-***Min Heap:*** In a min heap, the value of each node is less than or equal to the values of its children. Therefore, the minimum element is at the root.
+**_Min Heap:_** In a min heap, the value of each node is less than or equal to the values of its children. Therefore, the minimum element is at the root.
 
 The heap data structure is often used to efficiently find and remove the maximum (or minimum) element, making it suitable for priority queue implementations. It also plays a crucial role in various algorithms, such as heap sort, and is used in graph algorithms like Dijkstra's algorithm for finding the shortest path.
 
@@ -2834,6 +2875,7 @@ Deletion: Removing the maximum (or minimum) element from the heap and rearrangin
 Peek: Retrieving the maximum (or minimum) element without removing it.
 
 Heaps are efficient for tasks that involve repeatedly finding and removing the extremal elements. The underlying binary tree structure allows these operations to be performed with logarithmic time complexity.
+
 </details>
 
 ### Min Heap
@@ -3024,5 +3066,78 @@ maxHeap.insert(1);
 
 console.log(maxHeap.getMax()); // Output: 10
 ```
+
+[🔼 Back to top](#data-structures)
+
+## Trie
+
+A trie (pronounced "try") is a tree-like data structure that is used to store a dynamic set of strings. It is particularly useful for tasks involving the insertion, deletion, and search operations on strings. Each node in the trie represents a single character of a string. Unlike binary search trees, the nodes in a trie have multiple children, typically equal to the size of the alphabet.
+
+<details>
+<summary>Common use cases for tries include:</summary>
+
+**_Autocomplete and Spell Checking:_** Tries are often used to implement features like autocomplete in text editors or search engines. They efficiently store and retrieve words based on partial inputs.
+
+**_IP Routing Tables:_** Tries are used in computer networking for storing IP addresses in routing tables, facilitating fast and efficient IP address lookups.
+
+**_Symbol Tables:_** Tries are used in compilers and interpreters to implement symbol tables, where identifiers (variables and functions) are stored and looked up.
+
+**_Dictionary Implementations:_** Tries are suitable for implementing dictionaries where words can be efficiently inserted, deleted, and searched.
+
+**_Efficient Prefix Searching:_** Tries excel in tasks that involve searching for words with a common prefix, making them suitable for applications like contact lists on mobile phones.
+
+</details>
+
+<br>
+
+Here's a basic implementation of a trie in JavaScript:
+
+```js
+class TrieNode {
+  constructor() {
+    this.children = {};
+    this.isEndOfWord = false;
+  }
+}
+
+class Trie {
+  constructor() {
+    this.root = new TrieNode();
+  }
+
+  insert(word) {
+    let node = this.root;
+    for (const char of word) {
+      if (!node.children[char]) {
+        node.children[char] = new TrieNode();
+      }
+      node = node.children[char];
+    }
+    node.isEndOfWord = true;
+  }
+
+  search(word) {
+    let node = this.root;
+    for (const char of word) {
+      if (!node.children[char]) {
+        return false;
+      }
+      node = node.children[char];
+    }
+    return node.isEndOfWord;
+  }
+}
+
+// Example usage
+const trie = new Trie();
+trie.insert("apple");
+console.log(trie.search("apple")); // Output: true
+console.log(trie.search("app")); // Output: false
+console.log(trie.search("apx")); // Output: false
+```
+
+In this example, each node in the trie has a children property, which is a dictionary mapping characters to the corresponding child nodes. The isEndOfWord property indicates whether the node represents the end of a word.
+
+The efficient time complexity of trie operations makes them valuable in scenarios where quick string manipulation and lookup are essential.
 
 [🔼 Back to top](#data-structures)

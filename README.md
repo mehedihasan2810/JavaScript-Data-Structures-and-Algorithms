@@ -55,7 +55,13 @@
       - [Red black Trees](#) ⏳
       - [Tries](#) ⏳
     - [Graph](#graph)
+      - [Graph Implementation(Undirected | Adjacency List)](#graph)
       - [Directed acyclic graph](#) ⏳
+    - [Heap](#heap)
+      - [Min Heap](#min-heap)
+      - [Max Heap](#max-heap)
+    - [Trie](#trie)
+      - [Trie Implementation](#trie-implementation)
 
 ## Big O Notation
 
@@ -2792,6 +2798,207 @@ graph.removeVertex("B");
 graph.display();
 // A->
 // C->
+```
+
+[🔼 Back to top](#data-structures)
+
+## Heap
+
+[Video Reference](https://youtu.be/-LVmKNvflnY?si=lzG6fvSycqBBYHP3&t=2:33:56)
+
+![An image which visualizing min heap max heap data structure](/assets/heap.png)
+<br>
+Source: [GeeksForGeeks](https://www.geeksforgeeks.org/heap-data-structure/)
+
+[To understand deeply how heap works checkout this freeCodeCamp youtube video](https://youtu.be/-LVmKNvflnY?si=lzG6fvSycqBBYHP3&t=2:33:55)
+
+### Min Heap
+
+A min-heap is a binary tree data structure in which the value of each node is less than or equal to the values of its children. This structure ensures that the minimum element is always at the root. Min-heaps are commonly implemented as arrays for efficiency.
+
+<details>
+<summary>Min Heap Usage:</summary>
+
+**_Job Scheduling:_** Min-heaps can be used to schedule jobs based on their priority or execution time.
+
+**_Network Routing:_** In computer networks, min-heaps can be utilized to optimize routing algorithms.
+
+**_Task Scheduling in Operating Systems:_** Min-heaps are used in operating systems to schedule tasks with the least processing time.
+
+**_Merge Operations:_** Min-heaps can be applied to efficiently perform merge operations in external sorting algorithms.
+
+**_Priority Queues:_** Min-heaps are often used to implement priority queues where elements with higher priority (lower value in this case) are served before elements with lower priority.
+
+</details>
+
+<br>
+
+```js
+class MinHeap {
+  constructor() {
+    this.heap = [];
+  }
+
+  push(value) {
+    this.heap.push(value);
+    this._heapifyUp();
+  }
+
+  pop() {
+    if (this.heap.length === 0) {
+      return null;
+    }
+
+    if (this.heap.length === 1) {
+      return this.heap.pop();
+    }
+
+    const root = this.heap[0];
+    this.heap[0] = this.heap.pop();
+    this._heapifyDown();
+
+    return root;
+  }
+
+  _heapifyUp() {
+    let index = this.heap.length - 1;
+
+    while (index > 0) {
+      const parentIndex = Math.floor((index - 1) / 2);
+      if (this.heap[index] < this.heap[parentIndex]) {
+        [this.heap[index], this.heap[parentIndex]] = [
+          this.heap[parentIndex],
+          this.heap[index],
+        ];
+        index = parentIndex;
+      } else {
+        break;
+      }
+    }
+  }
+
+  _heapifyDown() {
+    let index = 0;
+
+    while (true) {
+      const leftChildIndex = 2 * index + 1;
+      const rightChildIndex = 2 * index + 2;
+      let smallestChildIndex = index;
+
+      if (
+        leftChildIndex < this.heap.length &&
+        this.heap[leftChildIndex] < this.heap[smallestChildIndex]
+      ) {
+        smallestChildIndex = leftChildIndex;
+      }
+
+      if (
+        rightChildIndex < this.heap.length &&
+        this.heap[rightChildIndex] < this.heap[smallestChildIndex]
+      ) {
+        smallestChildIndex = rightChildIndex;
+      }
+
+      if (smallestChildIndex !== index) {
+        [this.heap[index], this.heap[smallestChildIndex]] = [
+          this.heap[smallestChildIndex],
+          this.heap[index],
+        ];
+        index = smallestChildIndex;
+      } else {
+        break;
+      }
+    }
+  }
+}
+
+// Example usage:
+const minHeap = new MinHeap();
+minHeap.push(4);
+minHeap.push(8);
+minHeap.push(2);
+minHeap.push(5);
+
+console.log(minHeap.pop()); // Output: 2
+console.log(minHeap.pop()); // Output: 4
+```
+
+[🔼 Back to top](#data-structures)
+
+<br>
+
+### Max Heap
+
+A max heap is a binary heap data structure where the value of each node is greater than or equal to the values of its children. The root node, therefore, contains the maximum element in the heap. It is a complete binary tree, represented as an array where the parent node at index i has children at indices 2i + 1 (left child) and 2i + 2 (right child).
+
+<details>
+
+<summary>Max Heap Usage</summary>
+
+**_Priority Queues:_** Max heaps are used in priority queues, where elements with higher priorities (larger values) are dequeued before elements with lower priorities.
+
+**_Heap Sort:_** The max heap is used in heap sort, a comparison-based sorting algorithm.
+
+**_Task Scheduling:_** Max heaps can be used in job scheduling algorithms, where tasks with higher priority are scheduled first.
+
+**_Graph Algorithms:_** Max heaps are used in algorithms like Prim's algorithm for finding minimum spanning trees.
+
+**_Memory Allocation:_** Max heaps can be used in memory allocation algorithms to allocate memory blocks of varying sizes efficiently.
+
+</details>
+
+<br>
+
+Here's a simple JavaScript implementation of a max heap along with an example of inserting elements into the heap:
+
+```js
+class MaxHeap {
+  constructor() {
+    this.heap = [];
+  }
+
+  insert(value) {
+    this.heap.push(value);
+    this.heapifyUp();
+  }
+
+  heapifyUp() {
+    let currentIndex = this.heap.length - 1;
+
+    while (currentIndex > 0) {
+      const parentIndex = Math.floor((currentIndex - 1) / 2);
+
+      if (this.heap[currentIndex] > this.heap[parentIndex]) {
+        // Swap if the current element is greater than its parent
+        [this.heap[currentIndex], this.heap[parentIndex]] = [
+          this.heap[parentIndex],
+          this.heap[currentIndex],
+        ];
+        currentIndex = parentIndex;
+      } else {
+        break;
+      }
+    }
+  }
+
+  getMax() {
+    if (this.heap.length === 0) {
+      return null;
+    }
+
+    return this.heap[0];
+  }
+}
+
+// Example usage
+const maxHeap = new MaxHeap();
+
+maxHeap.insert(5);
+maxHeap.insert(10);
+maxHeap.insert(7);
+maxHeap.insert(1);
+
+console.log(maxHeap.getMax()); // Output: 10
 ```
 
 [🔼 Back to top](#data-structures)

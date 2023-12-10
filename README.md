@@ -3076,15 +3076,17 @@ A trie (pronounced "try") is a tree-like data structure that is used to store a 
 <details>
 <summary>Common use cases for tries include:</summary>
 
-**_Autocomplete and Spell Checking:_** Tries are often used to implement features like autocomplete in text editors or search engines. They efficiently store and retrieve words based on partial inputs.
+- **_Autocomplete, Spell Checking and Auto Correcting:_** Tries are often used to implement features like autocomplete in text editors or search engines. They efficiently store and retrieve words based on partial inputs.
 
-**_IP Routing Tables:_** Tries are used in computer networking for storing IP addresses in routing tables, facilitating fast and efficient IP address lookups.
+- **_IP Routing Tables:_** Tries are used in computer networking for storing IP addresses in routing tables, facilitating fast and efficient IP address lookups.
 
-**_Symbol Tables:_** Tries are used in compilers and interpreters to implement symbol tables, where identifiers (variables and functions) are stored and looked up.
+- **_Symbol Tables:_** Tries are used in compilers and interpreters to implement symbol tables, where identifiers (variables and functions) are stored and looked up.
 
-**_Dictionary Implementations:_** Tries are suitable for implementing dictionaries where words can be efficiently inserted, deleted, and searched.
+- **_Dictionary Implementations:_** Tries are suitable for implementing dictionaries where words can be efficiently inserted, deleted, and searched.
 
-**_Efficient Prefix Searching:_** Tries excel in tasks that involve searching for words with a common prefix, making them suitable for applications like contact lists on mobile phones.
+- **_Efficient Prefix Searching:_** Tries excel in tasks that involve searching for words with a common prefix, making them suitable for applications like contact lists on mobile phones.
+
+- **_Predictive Search:_**
 
 </details>
 

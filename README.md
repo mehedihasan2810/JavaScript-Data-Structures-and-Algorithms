@@ -2804,13 +2804,37 @@ graph.display();
 
 ## Heap
 
-[Video Reference](https://youtu.be/-LVmKNvflnY?si=lzG6fvSycqBBYHP3&t=2:33:56)
-
 ![An image which visualizing min heap max heap data structure](/assets/heap.png)
 <br>
 Source: [GeeksForGeeks](https://www.geeksforgeeks.org/heap-data-structure/)
 
-[To understand deeply how heap works checkout this freeCodeCamp youtube video](https://youtu.be/-LVmKNvflnY?si=lzG6fvSycqBBYHP3&t=2:33:55)
+[To understand visually how heap works checkout this freeCodeCamp youtube video](https://youtu.be/-LVmKNvflnY?si=lzG6fvSycqBBYHP3&t=2:33:55)
+
+
+<details>
+<summary>What is Heap?</summary>
+
+
+A heap is a specialized tree-based data structure that satisfies the heap property. In a heap, the elements are arranged in a particular order such that the value of each node is either greater than or equal to (max heap) or less than or equal to (min heap) the values of its children. This ensures that the root of the heap contains either the maximum or minimum element, depending on the type of heap.
+
+***Heaps are commonly implemented as binary heaps, where each node has at most two children. The binary heap has two variations:***
+
+***Max Heap:*** In a max heap, the value of each node is greater than or equal to the values of its children. Therefore, the maximum element is at the root.
+
+***Min Heap:*** In a min heap, the value of each node is less than or equal to the values of its children. Therefore, the minimum element is at the root.
+
+The heap data structure is often used to efficiently find and remove the maximum (or minimum) element, making it suitable for priority queue implementations. It also plays a crucial role in various algorithms, such as heap sort, and is used in graph algorithms like Dijkstra's algorithm for finding the shortest path.
+
+Key operations on a heap include:
+
+Insertion: Adding a new element to the heap while maintaining the heap property.
+
+Deletion: Removing the maximum (or minimum) element from the heap and rearranging the remaining elements to maintain the heap property.
+
+Peek: Retrieving the maximum (or minimum) element without removing it.
+
+Heaps are efficient for tasks that involve repeatedly finding and removing the extremal elements. The underlying binary tree structure allows these operations to be performed with logarithmic time complexity.
+</details>
 
 ### Min Heap
 

@@ -45,6 +45,7 @@
       - [Linked List Queue](#linked-in-queue)
       - [Circular Linked List](#) ⏳
       - [Doubly Linked List](#doubly-linked-list)
+      - [Merge Sort Linked List](#merge-sort-linked-list)
     - [Hash Table / Hash Map](#hash-table--hash-map)
     - [Tree](#tree)
       - [Binary Search Tree](#binary-search-tree-bst)
@@ -417,6 +418,7 @@ console.log(arr); // [-6, -2, 4, 8, 20]
 ### Quick Sort
 
 ![an image which visualizing how quicksort algorithm works](/assets/QuickSort2.png)
+<br>
 Source: [GeeksForGeeks](https://www.geeksforgeeks.org/quick-sort/)
 
 Quicksort is a divide and conquer algorithm. Quicksort first divides a large array into two smaller sub-arrays: the low elements and the high elements. Quicksort can then recursively sort the sub-arrays
@@ -515,6 +517,7 @@ console.log(arr2); // [ 8, 20, -6, -2, 4 ]
 ### Merge Sort
 
 ![an image visualizing how merge sort works](/assets/Merge-Sort-Algorithm.png)
+<br>
 Source: [101computing](https://www.101computing.net/merge-sort-algorithm/)
 
 Merge sort is defined as a sorting algorithm that works by dividing an array into smaller subarrays, sorting each subarray, and then merging the sorted subarrays back together to form the final sorted array.
@@ -1852,6 +1855,91 @@ list.removeFromEnd();
 list.print(); // 0<->1<->2<->
 list.removeFromFront();
 list.print(); // 1<->2<->
+```
+
+[🔼 Back to top](#data-structures)
+
+### Merge Sort Linked List
+
+```js
+// check the linkedList implementation above
+const linkedList1 = new LinkedList();
+
+linkedList1.append(4);
+linkedList1.append(2);
+linkedList1.append(1);
+linkedList1.append(3);
+linkedList1.append(5);
+linkedList1.append(-5);
+
+function merge(list1, list2) {
+  let dummy = new Node(0);
+  let current = dummy;
+
+  while (list1 !== null && list2 !== null) {
+    if (list1.value < list2.value) {
+      current.next = list1;
+      list1 = list1.next;
+    } else {
+      current.next = list2;
+      list2 = list2.next;
+    }
+    current = current.next;
+  }
+
+  if (list1 !== null) {
+    current.next = list1;
+  } else {
+    current.next = list2;
+  }
+
+  return dummy.next;
+}
+
+// --------------------------------------------
+
+function sortList(head) {
+  if (head === null || head.next === null) {
+    return head;
+  }
+
+  // Find the middle of the linked list
+  let slow = head;
+  let fast = head;
+  let prev = null;
+
+  while (fast !== null && fast.next !== null) {
+    prev = slow;
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+
+  // Split the linked list into two halves
+  prev.next = null;
+
+  // Recursively sort each half
+  const sortedFirstHalf = sortList(head);
+  const sortedSecondHalf = sortList(slow);
+
+  // Merge the sorted halves
+  return merge(sortedFirstHalf, sortedSecondHalf);
+}
+
+const head = sortList(linkedList1.head);
+
+/* Function to print the linked list */
+function printList(node) {
+  let result = "";
+  while (node != null) {
+    result += node.value + " ";
+
+    node = node.next;
+  }
+
+  console.log(result); // -5 1 2 3 4 5
+}
+
+printList(head);
 ```
 
 [🔼 Back to top](#data-structures)

@@ -25,6 +25,8 @@
     - [Climbing Staircase](#climbing-staircase)
     - [Tower Of Hanoi](#tower-of-hanoi)
     - [Prim's, Kruskal's and Floyd's algo](#) ⏳
+  - ### [Algorithm Patterns](#algorithm-patterns)
+    - [Sliding Window](#sliding-window)
 - ## [Data Structures](#data-structures)
   - ### [Built In Data Structures](#built-in-data-structures)
     - [Array](#array)
@@ -653,6 +655,54 @@ towerOfHanoi(3, "A", "C", "B");
 // Move disk 2 from B to C
 // Move disk 1 from A to C
 ```
+
+## Algorithm Patterns
+
+### Sliding Window
+
+The sliding window algorithm is a technique used to efficiently solve problems that involve arrays or sequences. It works by maintaining a "window" of elements within the array and sliding it through the array to perform a specific operation. This technique is often used to optimize problems with a time complexity of O(n^2) to O(n).
+
+Let's go through a simple example of a sliding window algorithm in JavaScript. Suppose you have an array of numbers, and you want to find the maximum sum of a subarray of a fixed size k. The sliding window algorithm can be used to achieve this efficiently.
+
+Here's a basic implementation in JavaScript:
+
+```js
+function maxSubarraySum(arr, k) {
+  if (arr.length < k) {
+    return null; // Invalid input, as the window size is larger than the array size.
+  }
+
+  // Calculate the sum of the first window.
+  let maxSum = 0;
+  for (let i = 0; i < k; i++) {
+    maxSum += arr[i];
+  }
+
+  let currentSum = maxSum;
+
+  // Slide the window through the array and update the sum.
+  for (let i = k; i < arr.length; i++) {
+    currentSum = currentSum - arr[i - k] + arr[i]; // Subtract the element leaving the window and add the new element.
+
+    // Update the max sum if the current sum is greater.
+    if (currentSum > maxSum) {
+      maxSum = currentSum;
+    }
+  }
+
+  return maxSum;
+}
+
+// Example usage:
+const array = [1, 4, 2, 10, 2, 3, 1, 0, 20];
+const windowSize = 3;
+const result = maxSubarraySum(array, windowSize);
+console.log(result); // Output: 21 (sum of subarray [1, 0, 20])
+```
+
+In this example, the maxSubarraySum function takes an array (arr) and a window size (k) as input and returns the maximum sum of a subarray of size k. The algorithm initializes the sum of the first window and then slides the window through the array, updating the sum as it goes. The time complexity of this algorithm is O(n).
+
+[🔼 Back to top](#data-structures)
 
 <!-------------
 Data Structures
@@ -1542,16 +1592,25 @@ class LinkedList {
   }
 
   reverse() {
+    // `prev` is used to keep track of the reversed part of the list.
     let prev = null;
+
+    // `current` is used to iterate through the original list.
     let curr = this.head;
 
     while (curr) {
-      let next = curr.next;
+      // In each iteration, the nextNode variable is used to temporarily store the next node in the original list.
+      let nextNode = curr.next;
+
+      // The direction of the `next` pointer for the current node is reversed to point to the previous node (prev).
       curr.next = prev;
+
+      // Move prev and current pointers to the next nodes for the next iteration.
       prev = curr;
-      curr = next;
+      curr = nextNode;
     }
 
+    // At the end of the loop, 'prev' will be the new head of the reversed list
     this.head = prev;
   }
 

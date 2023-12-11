@@ -54,7 +54,6 @@
       - [Binary Search Tree](#binary-search-tree-bst)
       - [AVL Trees](#) ⏳
       - [Red black Trees](#) ⏳
-      - [Tries](#) ⏳
     - [Graph](#graph)
       - [Graph Implementation(Undirected | Adjacency List)](#graph)
       - [Directed acyclic graph](#) ⏳
@@ -3071,6 +3070,10 @@ console.log(maxHeap.getMax()); // Output: 10
 [🔼 Back to top](#data-structures)
 
 ## Trie
+
+![Trie data structure visualization](/assets/trie.png)
+<br>
+Image Credit: [Easy Algorithms](https://www.enjoyalgorithms.com/blog/introduction-to-trie-data-structure)
 
 A trie (pronounced "try") is a tree-like data structure that is used to store a dynamic set of strings. It is particularly useful for tasks involving the insertion, deletion, and search operations on strings. Each node in the trie represents a single character of a string. Unlike binary search trees, the nodes in a trie have multiple children, typically equal to the size of the alphabet.
 

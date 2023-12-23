@@ -40,7 +40,7 @@
       - [Queue (with array)](#implementationwith-array)
       - [Queue (with object) - optimized](#implementationwith-object---optimized)
       - [Circular Queue](#circular-queue)
-      - [Priority Queue](#) ⏳
+      - [Priority Queue](#priority-queue)
     - [Linked List](#linked-list)
       - [Linked List Implementation](#implementation-without-tail-pointer)
       - [Linked List Optimized Implementation](#implementation-with-tail-pointer---more-optimized)
@@ -1102,7 +1102,7 @@ When working with queue of fixed maximum size, a circular queue is a great imple
 - Streaming Data
 - Traffic lights
 </details>
-<br>
+
 
 **_Implementation:_**
 
@@ -1192,6 +1192,143 @@ queue.print(); // 20 30 40 50
 queue.enqueue(60);
 queue.print(); // 20 30 40 50 60
 ```
+
+[🔼 Back to top](#data-structures)
+
+### Priority Queue
+
+A priority queue is a data structure that maintains a set of elements, each associated with a priority, and allows efficient insertion and removal of elements according to their priorities. In JavaScript, you can implement a priority queue using a binary heap.
+
+<details>
+<summary>Priority Queue Usage</summary>
+
+- Task Scheduling
+- Job Scheduling
+- Event-driven Simulations
+- Load Balancing
+- Scheduling in Real-time Systems
+- Data Compression
+</details>
+
+**_Implementation(uses min-heap):_**
+
+```js
+class PriorityQueue {
+  constructor() {
+    // Space O(N)
+    this.heap = [];
+  }
+
+  // Check if the priority queue is empty
+  isEmpty() {
+    return this.heap.length === 0;
+  }
+  
+  // Time O(log n)
+  // Add an element to the priority queue with the specified priority
+  enqueue(element, priority) {
+    const node = { element, priority };
+    this.heap.push(node);
+    this.heapifyUp(); // Restore the heap property after insertion
+  }
+  
+  // Time O(log n)
+  // Remove and return the element with the highest priority
+  dequeue() {
+    if (this.isEmpty()) {
+      return null;
+    }
+
+    const top = this.heap[0];
+    const last = this.heap.pop();
+
+    if (this.heap.length > 0) {
+      this.heap[0] = last;
+      this.heapifyDown(); // Restore the heap property after removal
+    }
+
+    return top.element;
+  }
+
+  // Move a newly inserted element up the heap to maintain the heap property
+  heapifyUp() {
+    let currentIndex = this.heap.length - 1;
+
+    while (currentIndex > 0) {
+      const parentIndex = Math.floor((currentIndex - 1) / 2);
+
+      if (this.heap[currentIndex].priority < this.heap[parentIndex].priority) {
+        this.swap(currentIndex, parentIndex);
+        currentIndex = parentIndex;
+      } else {
+        break; // Heap property is restored
+      }
+    }
+  }
+
+  // Move the root element down the heap to maintain the heap property
+  heapifyDown() {
+    let currentIndex = 0;
+
+    while (true) {
+      const leftChildIndex = 2 * currentIndex + 1;
+      const rightChildIndex = 2 * currentIndex + 2;
+      let nextIndex = currentIndex;
+
+      // Find the index of the smallest child (if any)
+      if (
+        leftChildIndex < this.heap.length &&
+        this.heap[leftChildIndex].priority < this.heap[nextIndex].priority
+      ) {
+        nextIndex = leftChildIndex;
+      }
+
+      if (
+        rightChildIndex < this.heap.length &&
+        this.heap[rightChildIndex].priority < this.heap[nextIndex].priority
+      ) {
+        nextIndex = rightChildIndex;
+      }
+
+      if (currentIndex !== nextIndex) {
+        this.swap(currentIndex, nextIndex);
+        currentIndex = nextIndex;
+      } else {
+        break; // Heap property is restored
+      }
+    }
+  }
+
+  // Swap elements at two indices in the heap
+  swap(i, j) {
+    const temp = this.heap[i];
+    this.heap[i] = this.heap[j];
+    this.heap[j] = temp;
+  }
+}
+
+// Example usage:
+const pq = new PriorityQueue();
+
+pq.enqueue("Task 1", 3);
+pq.enqueue("Task 2", 1);
+pq.enqueue("Task 3", 2);
+
+console.log(pq.dequeue()); // Output: 'Task 2'
+console.log(pq.dequeue()); // Output: 'Task 3'
+console.log(pq.dequeue()); // Output: 'Task 1'
+```
+
+**Explanation:**
+
+- The PriorityQueue class uses an array (heap) to represent the binary heap. Each element in the heap is an object with element and priority properties.
+- The enqueue method adds an element to the priority queue with the specified priority and then performs a heapifyUp operation to maintain the heap property.
+- The dequeue method removes the element with the highest priority (lowest value) from the priority queue and then performs a heapifyDown operation.
+- The heapifyUp and heapifyDown methods ensure that the binary heap properties are maintained after insertion and removal operations.
+- The swap method is a helper function to swap elements at two indices in the heap.
+- The priority queue supports elements with associated priorities, and elements with higher priority values will be dequeued before those with lower priority values.
+
+> This implementation uses a `min-heap`, where the element with the minimum priority has the highest priority. If you need a max-heap (highest priority element is dequeued first), you can modify the comparison conditions accordingly.
 
 [🔼 Back to top](#data-structures)
 

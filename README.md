@@ -3069,12 +3069,14 @@ class MinHeap {
     this.heap = [];
   }
 
-  push(value) {
+  // Adds new element in the heap
+  insert(value) {
     this.heap.push(value);
     this._heapifyUp();
   }
 
-  pop() {
+  // Removes and returns the minimum element from the heap
+  extractMin() {
     if (this.heap.length === 0) {
       return null;
     }
@@ -3090,67 +3092,104 @@ class MinHeap {
     return root;
   }
 
-  _heapifyUp() {
+   // getMin: Returns the minimum element without removing it from the heap.
+  getMin() {
+    return this.heap.length > 0 ? this.heap[0] : null;
+  }
+
+
+  // Size: Returns the number of elements in the heap.
+  size() {
+    return this.heap.length;
+  }
+
+   // Is Empty: Checks if the heap is empty.
+  isEmpty() {
+    return this.heap.length === 0;
+  }
+
+ // _HeapifyUp operation to maintain the min heap property after inserting a new element.
+_heapifyUp() {
+    // Start with the index of the last inserted element.
     let index = this.heap.length - 1;
 
+    // Continue moving up the tree until the heap property is restored.
     while (index > 0) {
-      const parentIndex = Math.floor((index - 1) / 2);
-      if (this.heap[index] < this.heap[parentIndex]) {
-        [this.heap[index], this.heap[parentIndex]] = [
-          this.heap[parentIndex],
-          this.heap[index],
-        ];
-        index = parentIndex;
-      } else {
-        break;
-      }
-    }
-  }
+        // Calculate the index of the parent element.
+        const parentIndex = Math.floor((index - 1) / 2);
 
-  _heapifyDown() {
+        // Compare the current element with its parent.
+        if (this.heap[index] < this.heap[parentIndex]) {
+            // Swap if the current element is smaller than its parent.
+            [this.heap[index], this.heap[parentIndex]] = [
+                this.heap[parentIndex],
+                this.heap[index],
+            ];
+
+            // Update the current index to the parent index for the next iteration.
+            index = parentIndex;
+        } else {
+            // If the current element is not smaller than its parent, break out of the loop.
+            break;
+        }
+    }
+}
+
+
+  // _HeapifyDown operation to maintain the min heap property after removing the root.
+_heapifyDown() {
+    // Start with the root element.
     let index = 0;
 
+    // Continue the process indefinitely.
     while (true) {
-      const leftChildIndex = 2 * index + 1;
-      const rightChildIndex = 2 * index + 2;
-      let smallestChildIndex = index;
+        // Calculate the indices of the left and right children.
+        const leftChildIndex = 2 * index + 1;
+        const rightChildIndex = 2 * index + 2;
 
-      if (
-        leftChildIndex < this.heap.length &&
-        this.heap[leftChildIndex] < this.heap[smallestChildIndex]
-      ) {
-        smallestChildIndex = leftChildIndex;
-      }
+        // Assume the current index is the smallest.
+        let smallestChildIndex = index;
 
-      if (
-        rightChildIndex < this.heap.length &&
-        this.heap[rightChildIndex] < this.heap[smallestChildIndex]
-      ) {
-        smallestChildIndex = rightChildIndex;
-      }
+        // Check if the left child exists and is smaller than the current smallest.
+        if (
+            leftChildIndex < this.heap.length &&
+            this.heap[leftChildIndex] < this.heap[smallestChildIndex]
+        ) {
+            smallestChildIndex = leftChildIndex;
+        }
 
-      if (smallestChildIndex !== index) {
-        [this.heap[index], this.heap[smallestChildIndex]] = [
-          this.heap[smallestChildIndex],
-          this.heap[index],
-        ];
-        index = smallestChildIndex;
-      } else {
-        break;
-      }
+        // Check if the right child exists and is smaller than the current smallest.
+        if (
+            rightChildIndex < this.heap.length &&
+            this.heap[rightChildIndex] < this.heap[smallestChildIndex]
+        ) {
+            smallestChildIndex = rightChildIndex;
+        }
+
+        // If the current index is not the smallest, swap with the smallest child.
+        if (smallestChildIndex !== index) {
+            [this.heap[index], this.heap[smallestChildIndex]] = [
+                this.heap[smallestChildIndex],
+                this.heap[index],
+            ];
+            index = smallestChildIndex;
+        } else {
+            // If no swap occurred, the heap property is restored, so break out of the loop.
+            break;
+        }
     }
-  }
 }
+
 
 // Example usage:
 const minHeap = new MinHeap();
-minHeap.push(4);
-minHeap.push(8);
-minHeap.push(2);
-minHeap.push(5);
+minHeap.insert(4);
+minHeap.insert(8);
+minHeap.insert(2);
+minHeap.insert(5);
 
-console.log(minHeap.pop()); // Output: 2
-console.log(minHeap.pop()); // Output: 4
+console.log(minHeap.extractMin()); // Output: 2
+console.log(minHeap.extractMin()); // Output: 4
 ```
 
 [🔼 Back to top](#data-structures)
@@ -3187,36 +3226,117 @@ class MaxHeap {
     this.heap = [];
   }
 
+  // Insert an element in the heap
   insert(value) {
     this.heap.push(value);
     this.heapifyUp();
   }
 
-  heapifyUp() {
-    let currentIndex = this.heap.length - 1;
-
-    while (currentIndex > 0) {
-      const parentIndex = Math.floor((currentIndex - 1) / 2);
-
-      if (this.heap[currentIndex] > this.heap[parentIndex]) {
-        // Swap if the current element is greater than its parent
-        [this.heap[currentIndex], this.heap[parentIndex]] = [
-          this.heap[parentIndex],
-          this.heap[currentIndex],
-        ];
-        currentIndex = parentIndex;
-      } else {
-        break;
-      }
+  // Extract Max: Removes and returns the maximum element from the heap.
+  extractMax() {
+    if (this.heap.length === 0) {
+      return null;
     }
+
+    const max = this.heap[0];
+    const last = this.heap.pop();
+
+    if (this.heap.length > 0) {
+      this.heap[0] = last;
+      this.heapifyDown();
+    }
+
+    return max;
   }
 
+  // Returns the max element from the heap without removing it
   getMax() {
     if (this.heap.length === 0) {
       return null;
     }
 
     return this.heap[0];
+  }
+
+  // Size: Returns the number of elements in the heap.
+  size() {
+    return this.heap.length;
+  }
+
+  // Is Empty: Checks if the heap is empty.
+  isEmpty() {
+    return this.heap.length === 0;
+  }
+
+  // HeapifyUp operation to maintain the max heap property after inserting a new element.
+  heapifyUp() {
+    // Start with the last inserted element.
+    let currentIndex = this.heap.length - 1;
+
+    // Continue moving up the tree until the heap property is restored.
+    while (currentIndex > 0) {
+      // Calculate the index of the parent element.
+      const parentIndex = Math.floor((currentIndex - 1) / 2);
+
+      // Compare the current element with its parent.
+      if (this.heap[currentIndex] > this.heap[parentIndex]) {
+        // Swap if the current element is greater than its parent.
+        [this.heap[currentIndex], this.heap[parentIndex]] = [
+          this.heap[parentIndex],
+          this.heap[currentIndex],
+        ];
+
+        // Update the current index to the parent index for the next iteration.
+        currentIndex = parentIndex;
+      } else {
+        // If the current element is not greater than its parent, break out of the loop.
+        break;
+      }
+    }
+  }
+
+  // HeapifyDown operation to maintain the max heap property after removing the root.
+  heapifyDown() {
+    // Start with the root element.
+    let currentIndex = 0;
+
+    // Continue the process indefinitely.
+    while (true) {
+      // Calculate the indices of the left and right children.
+      const leftChildIndex = 2 * currentIndex + 1;
+      const rightChildIndex = 2 * currentIndex + 2;
+
+      // Assume the current index is the largest.
+      let largestChildIndex = currentIndex;
+
+      // Check if the left child exists and is greater than the current largest.
+      if (
+        leftChildIndex < this.heap.length &&
+        this.heap[leftChildIndex] > this.heap[largestChildIndex]
+      ) {
+        largestChildIndex = leftChildIndex;
+      }
+
+      // Check if the right child exists and is greater than the current largest.
+      if (
+        rightChildIndex < this.heap.length &&
+        this.heap[rightChildIndex] > this.heap[largestChildIndex]
+      ) {
+        largestChildIndex = rightChildIndex;
+      }
+
+      // If the current index is not the largest, swap with the largest child.
+      if (currentIndex !== largestChildIndex) {
+        [this.heap[currentIndex], this.heap[largestChildIndex]] = [
+          this.heap[largestChildIndex],
+          this.heap[currentIndex],
+        ];
+        currentIndex = largestChildIndex;
+      } else {
+        // If no swap occurred, the heap property is restored, so break out of the loop.
+        break;
+      }
+    }
   }
 }
 

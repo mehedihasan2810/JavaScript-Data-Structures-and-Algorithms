@@ -1103,7 +1103,6 @@ When working with queue of fixed maximum size, a circular queue is a great imple
 - Traffic lights
 </details>
 
-
 **_Implementation:_**
 
 ```js
@@ -1223,59 +1222,82 @@ class PriorityQueue {
   isEmpty() {
     return this.heap.length === 0;
   }
-  
+
+  // Enqueue operation to add a new element with a priority to the priority queue.
   // Time O(log n)
-  // Add an element to the priority queue with the specified priority
   enqueue(element, priority) {
+    // Create a new node object that represents the element and its priority.
     const node = { element, priority };
+
+    // Push the newly created node to the end of the heap array.
     this.heap.push(node);
-    this.heapifyUp(); // Restore the heap property after insertion
+
+    // After inserting a new element, perform heapifyUp to maintain the heap property.
+    this.heapifyUp();
   }
-  
+
+  // Dequeue operation to remove and return the element with the highest priority.
   // Time O(log n)
-  // Remove and return the element with the highest priority
   dequeue() {
+    // Check if the priority queue is empty. If so, return null.
     if (this.isEmpty()) {
       return null;
     }
 
+    // Save the element at the root (highest priority) of the heap.
     const top = this.heap[0];
+
+    // Replace the root with the last element and remove the last element from the heap.
     const last = this.heap.pop();
 
+    // If there are still elements in the heap, replace the root with the last element (heap[0] = last) and
+    // perform the heapifyDown operation to maintain the heap property.
     if (this.heap.length > 0) {
       this.heap[0] = last;
       this.heapifyDown(); // Restore the heap property after removal
     }
 
+    // Return the element that was at the root.
     return top.element;
   }
 
-  // Move a newly inserted element up the heap to maintain the heap property
+  // HeapifyUp operation to maintain the heap property after inserting a new element.
   heapifyUp() {
+    // Start with the index of the newly inserted element (at the end of the heap).
     let currentIndex = this.heap.length - 1;
 
+    // Continue the process while the current index is greater than 0.
     while (currentIndex > 0) {
+      // Calculate the index of the parent of the current element.
       const parentIndex = Math.floor((currentIndex - 1) / 2);
 
+      // Compare the priority of the current element with its parent, and swap if necessary.
       if (this.heap[currentIndex].priority < this.heap[parentIndex].priority) {
         this.swap(currentIndex, parentIndex);
         currentIndex = parentIndex;
       } else {
-        break; // Heap property is restored
+        // Break out of the loop if the heap property is restored.
+        break;
       }
     }
   }
 
-  // Move the root element down the heap to maintain the heap property
+  // HeapifyDown operation to maintain the heap property after removing or replacing the root.
   heapifyDown() {
+    // Start with the root (index 0) as the current index.
     let currentIndex = 0;
 
+    // Continue the process indefinitely (will break out of the loop when heap property is restored).
     while (true) {
+      // Calculate the indices of the left and right children of the current index.
       const leftChildIndex = 2 * currentIndex + 1;
       const rightChildIndex = 2 * currentIndex + 2;
+
+      // Initialize nextIndex with the current index.
       let nextIndex = currentIndex;
 
-      // Find the index of the smallest child (if any)
+      // Compare the priority of the left child with the priority of the element at nextIndex.
+      // If the left child has a smaller priority, update nextIndex to the left child index.
       if (
         leftChildIndex < this.heap.length &&
         this.heap[leftChildIndex].priority < this.heap[nextIndex].priority
@@ -1283,6 +1305,8 @@ class PriorityQueue {
         nextIndex = leftChildIndex;
       }
 
+      // Compare the priority of the right child with the priority of the element at nextIndex.
+      // If the right child has a smaller priority, update nextIndex to the right child index.
       if (
         rightChildIndex < this.heap.length &&
         this.heap[rightChildIndex].priority < this.heap[nextIndex].priority
@@ -1290,11 +1314,14 @@ class PriorityQueue {
         nextIndex = rightChildIndex;
       }
 
+      // If currentIndex is different from nextIndex, swap elements and update currentIndex.
       if (currentIndex !== nextIndex) {
         this.swap(currentIndex, nextIndex);
         currentIndex = nextIndex;
+        // If a swap was performed, continue the loop.
       } else {
-        break; // Heap property is restored
+        // If no swap was performed, break out of the loop as the heap property is now restored.
+        break;
       }
     }
   }

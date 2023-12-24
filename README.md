@@ -1211,7 +1211,7 @@ A priority queue is a data structure that maintains a set of elements, each asso
 - Data Compression
 </details>
 
-**_Implementation(uses [Min Heap](https://github.com/mehedihasan2810/JavaScript-Data-Structures-and-Algorithms?tab=readme-ov-file#min-heap)):_**
+**_Min Priority Queue Implementation(uses [Min Heap](#min-heap)):_**
 
 ```js
 class PriorityQueue {
@@ -1226,7 +1226,7 @@ class PriorityQueue {
   }
 
   // Enqueue operation to add a new element with a priority to the priority queue.
-  // Time O(log n)
+  // Time O(log N) | Space O(1)
   enqueue(element, priority) {
     // Create a new node object that represents the element and its priority.
     const node = { element, priority };
@@ -1239,7 +1239,7 @@ class PriorityQueue {
   }
 
   // Dequeue operation to remove and return the element with the highest priority.
-  // Time O(log n)
+  // Time O(log N) | Space O(1)
   dequeue() {
     // Check if the priority queue is empty. If so, return null.
     if (this.isEmpty()) {
@@ -1361,7 +1361,7 @@ console.log(pq.dequeue()); // Output: 'Task 1'
 
 ### Max Priority Queue
 
-**_Implementation(uses [Max Heap](https://github.com/mehedihasan2810/JavaScript-Data-Structures-and-Algorithms?tab=readme-ov-file#max-heap))_**
+**_Implementation(uses [Max Heap](#max-heap))_**
 
 ```js
 class MaxPriorityQueue {
@@ -1371,6 +1371,7 @@ class MaxPriorityQueue {
   }
 
   // Method to insert a new element into the max heap.
+  // Time O(log N) | Space O(1)
   enqueue(element, priority) {
     // Create a node with the given element and priority.
     const node = { element, priority };
@@ -1383,6 +1384,7 @@ class MaxPriorityQueue {
   }
 
   // Method to extract the maximum element (root) from the max heap.
+  // Time O(log N) | Space O(1)
   dequeue() {
     if (this.isEmpty()) {
       // Return null if the heap is empty.
@@ -1410,66 +1412,78 @@ class MaxPriorityQueue {
     return this.heap.length === 0;
   }
 
-  // Private method to restore the max heap property after insertion.
-  _heapifyUp() {
+// Private method to restore the max heap property after insertion.
+_heapifyUp() {
+    // Start with the index of the last inserted element.
     let currentIndex = this.heap.length - 1;
 
+    // Continue moving up the tree until the heap property is restored.
     while (currentIndex > 0) {
-      const parentIndex = Math.floor((currentIndex - 1) / 2);
+        // Calculate the index of the parent element.
+        const parentIndex = Math.floor((currentIndex - 1) / 2);
 
-      if (this.heap[currentIndex].priority > this.heap[parentIndex].priority) {
-        // Swap if the current element has higher priority than its parent.
-        [this.heap[currentIndex], this.heap[parentIndex]] = [
-          this.heap[parentIndex],
-          this.heap[currentIndex],
-        ];
-        currentIndex = parentIndex;
-      } else {
-        // Break if the max heap property is restored.
-        break;
-      }
+        // Compare the current element with its parent.
+        if (this.heap[currentIndex].priority > this.heap[parentIndex].priority) {
+            // Swap if the current element has higher priority than its parent.
+            [this.heap[currentIndex], this.heap[parentIndex]] = [
+                this.heap[parentIndex],
+                this.heap[currentIndex],
+            ];
+
+            // Update the current index to the parent index for the next iteration.
+            currentIndex = parentIndex;
+        } else {
+            // If the current element is not higher than its parent, break out of the loop.
+            break;
+        }
     }
-  }
+}
 
-  // Private method to restore the max heap property after removal.
-  _heapifyDown() {
+
+ // Private method to restore the max heap property after removal.
+_heapifyDown() {
+    // Start with the root element.
     let currentIndex = 0;
 
+    // Continue the process indefinitely.
     while (true) {
-      const leftChildIndex = 2 * currentIndex + 1;
-      const rightChildIndex = 2 * currentIndex + 2;
-      let largestChildIndex = currentIndex;
+        // Calculate the indices of the left and right children.
+        const leftChildIndex = 2 * currentIndex + 1;
+        const rightChildIndex = 2 * currentIndex + 2;
 
-      if (
-        leftChildIndex < this.heap.length &&
-        this.heap[leftChildIndex].priority >
-          this.heap[largestChildIndex].priority
-      ) {
-        largestChildIndex = leftChildIndex;
-      }
+        // Assume the current index is the largest.
+        let largestChildIndex = currentIndex;
 
-      if (
-        rightChildIndex < this.heap.length &&
-        this.heap[rightChildIndex].priority >
-          this.heap[largestChildIndex].priority
-      ) {
-        largestChildIndex = rightChildIndex;
-      }
+        // Check if the left child exists and has higher priority than the current largest.
+        if (
+            leftChildIndex < this.heap.length &&
+            this.heap[leftChildIndex].priority > this.heap[largestChildIndex].priority
+        ) {
+            largestChildIndex = leftChildIndex;
+        }
 
-      if (currentIndex !== largestChildIndex) {
-        // Swap if the current element has lower priority than its largest child.
-        [this.heap[currentIndex], this.heap[largestChildIndex]] = [
-          this.heap[largestChildIndex],
-          this.heap[currentIndex],
-        ];
-        currentIndex = largestChildIndex;
-      } else {
-        // Break if the max heap property is restored.
-        break;
-      }
+        // Check if the right child exists and has higher priority than the current largest.
+        if (
+            rightChildIndex < this.heap.length &&
+            this.heap[rightChildIndex].priority > this.heap[largestChildIndex].priority
+        ) {
+            largestChildIndex = rightChildIndex;
+        }
+
+        // If the current index is not the largest, swap with the largest child.
+        if (currentIndex !== largestChildIndex) {
+            [this.heap[currentIndex], this.heap[largestChildIndex]] = [
+                this.heap[largestChildIndex],
+                this.heap[currentIndex],
+            ];
+            currentIndex = largestChildIndex;
+        } else {
+            // Break if the max heap property is restored.
+            break;
+        }
     }
-  }
 }
+
 
 // Example usage:
 const maxPriorityQueue = new MaxPriorityQueue();
